@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/erika/AppSidebar";
 import { TopBar } from "@/components/erika/TopBar";
+import { LoginPage } from "@/components/erika/LoginPage";
 import { Inbox } from "@/components/erika/Inbox";
 import { MemoryViewer } from "@/components/erika/MemoryViewer";
 import { DigestView } from "@/components/erika/DigestView";
@@ -17,9 +18,28 @@ import { ProfileSettings } from "@/components/erika/ProfileSettings";
 import { VersionHistory } from "@/components/erika/VersionHistory";
 import { WhatsNew } from "@/components/erika/WhatsNew";
 import { ErikaProvider } from "@/contexts/ErikaContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
+  const { isAuthenticated, login, isLoading } = useAuth();
   const [activeModule, setActiveModule] = useState('inbox');
+
+  // Show loading spinner while checking auth
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login page if not authenticated
+  if (!isAuthenticated) {
+    return <LoginPage onLogin={login} />;
+  }
 
   const renderActiveModule = () => {
     switch (activeModule) {

@@ -13,6 +13,7 @@ import {
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 import { useErika } from '@/contexts/ErikaContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface TopBarProps {
   activeModule: string;
@@ -21,6 +22,7 @@ interface TopBarProps {
 
 export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
   const { state } = useErika();
+  const { user, logout } = useAuth();
   const { files } = state;
   
   const processingCount = files.filter(f => f.status === 'processing').length;
@@ -241,13 +243,15 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm" className="relative">
               <Avatar className="h-6 w-6">
-                <AvatarImage src="/api/placeholder/32/32" alt="User" />
-                <AvatarFallback className="text-xs">EU</AvatarFallback>
+                <AvatarImage src={user?.avatar} alt={user?.name} />
+                <AvatarFallback className="text-xs">
+                  {user?.name?.split(' ').map(n => n[0]).join('') || 'U'}
+                </AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-64 bg-background border shadow-lg z-50">
-            <DropdownMenuLabel>Account</DropdownMenuLabel>
+            <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
             <DropdownMenuItem onClick={() => setActiveModule('profile')}>
               <User className="mr-2 h-4 w-4" />
               Profile Settings
@@ -258,7 +262,7 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
               Data Export & Import
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
               <Brain className="mr-2 h-4 w-4" />
               Sign Out
             </DropdownMenuItem>
