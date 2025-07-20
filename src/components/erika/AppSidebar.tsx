@@ -36,8 +36,6 @@ const modules = [
   { id: 'query', name: 'Query Terminal', icon: Search, description: 'Natural language queries' },
   { id: 'mckinsey', name: 'Consultant Mode', icon: TrendingUp, description: 'Strategic frameworks' },
   { id: 'inspector', name: 'File Inspector', icon: FileSearch, description: 'Detailed file analysis' },
-  { id: 'export', name: 'Export & Import', icon: Download, description: 'Data portability' },
-  { id: 'logs', name: 'System Logs', icon: Activity, description: 'Processing activity' },
 ];
 
 export function AppSidebar({ activeModule, setActiveModule }: AppSidebarProps) {
@@ -79,11 +77,6 @@ export function AppSidebar({ activeModule, setActiveModule }: AppSidebarProps) {
                             {module.id === 'inbox' && processingCount > 0 && (
                               <Badge variant="secondary" className="ml-2 h-5 text-xs">
                                 {processingCount}
-                              </Badge>
-                            )}
-                            {module.id === 'logs' && errorCount > 0 && (
-                              <Badge variant="destructive" className="ml-2 h-5 text-xs">
-                                {errorCount}
                               </Badge>
                             )}
                           </div>
