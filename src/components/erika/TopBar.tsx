@@ -79,11 +79,11 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
               <Info className="mr-2 h-4 w-4" />
               Full Documentation
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveModule('version-history')}>
               <CheckCircle className="mr-2 h-4 w-4" />
               Version History
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveModule('whats-new')}>
               <Activity className="mr-2 h-4 w-4" />
               What's New
             </DropdownMenuItem>
@@ -248,7 +248,7 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-64 bg-background border shadow-lg z-50">
             <DropdownMenuLabel>Account</DropdownMenuLabel>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveModule('profile')}>
               <User className="mr-2 h-4 w-4" />
               Profile Settings
             </DropdownMenuItem>

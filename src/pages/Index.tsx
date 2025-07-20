@@ -13,6 +13,9 @@ import { AboutErika } from "@/components/erika/AboutErika";
 import { Settings } from "@/components/erika/Settings";
 import { FileInspector } from "@/components/erika/FileInspector";
 import { ExportImport } from "@/components/erika/ExportImport";
+import { ProfileSettings } from "@/components/erika/ProfileSettings";
+import { VersionHistory } from "@/components/erika/VersionHistory";
+import { WhatsNew } from "@/components/erika/WhatsNew";
 import { ErikaProvider } from "@/contexts/ErikaContext";
 
 const Index = () => {
@@ -40,6 +43,12 @@ const Index = () => {
         return <Settings />;
       case 'about':
         return <AboutErika />;
+      case 'profile':
+        return <ProfileSettings />;
+      case 'version-history':
+        return <VersionHistory />;
+      case 'whats-new':
+        return <WhatsNew />;
       case 'logs':
         return <SystemLogs />;
       default:
