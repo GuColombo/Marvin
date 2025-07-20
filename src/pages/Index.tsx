@@ -1,46 +1,53 @@
 import { useState } from 'react';
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/erika/AppSidebar";
-import { FileIngestion } from "@/components/erika/FileIngestion";
-import { TopicClassification } from "@/components/erika/TopicClassification";
-import { BehaviorConfiguration } from "@/components/erika/BehaviorConfiguration";
-import { QueryInterface } from "@/components/erika/QueryInterface";
+import { TopBar } from "@/components/erika/TopBar";
+import { Inbox } from "@/components/erika/Inbox";
 import { MemoryViewer } from "@/components/erika/MemoryViewer";
-import { AskErika } from "@/components/erika/AskErika";
+import { DigestView } from "@/components/erika/DigestView";
+import { QueryInterface } from "@/components/erika/QueryInterface";
+import { McKinseyMode } from "@/components/erika/McKinseyMode";
+import { BehaviorConfiguration } from "@/components/erika/BehaviorConfiguration";
+import { SystemLogs } from "@/components/erika/SystemLogs";
 import { ErikaProvider } from "@/contexts/ErikaContext";
 
 const Index = () => {
-  const [activeModule, setActiveModule] = useState('ingestion');
+  const [activeModule, setActiveModule] = useState('inbox');
 
   const renderActiveModule = () => {
     switch (activeModule) {
-      case 'ingestion':
-        return <FileIngestion />;
-      case 'classification':
-        return <TopicClassification />;
-      case 'behavior':
-        return <BehaviorConfiguration />;
-      case 'query':
-        return <QueryInterface />;
+      case 'inbox':
+        return <Inbox />;
       case 'memory':
         return <MemoryViewer />;
-      case 'ask':
-        return <AskErika />;
+      case 'digest':
+        return <DigestView />;
+      case 'query':
+        return <QueryInterface />;
+      case 'mckinsey':
+        return <McKinseyMode />;
+      case 'behavior':
+        return <BehaviorConfiguration />;
+      case 'logs':
+        return <SystemLogs />;
       default:
-        return <FileIngestion />;
+        return <Inbox />;
     }
   };
 
   return (
     <ErikaProvider>
       <SidebarProvider>
-        <div className="min-h-screen flex w-full">
+        <div className="min-h-screen flex w-full bg-background">
           <AppSidebar activeModule={activeModule} setActiveModule={setActiveModule} />
-          <main className="flex-1 p-6 bg-background">
-            <div className="max-w-7xl mx-auto">
-              {renderActiveModule()}
-            </div>
-          </main>
+          <div className="flex-1 flex flex-col">
+            <TopBar activeModule={activeModule} />
+            <main className="flex-1 p-8">
+              <div className="max-w-7xl mx-auto">
+                {renderActiveModule()}
+              </div>
+            </main>
+          </div>
         </div>
       </SidebarProvider>
     </ErikaProvider>
