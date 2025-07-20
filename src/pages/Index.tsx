@@ -6,7 +6,7 @@ import { Inbox } from "@/components/erika/Inbox";
 import { MemoryViewer } from "@/components/erika/MemoryViewer";
 import { DigestView } from "@/components/erika/DigestView";
 import { QueryInterface } from "@/components/erika/QueryInterface";
-import { McKinseyMode } from "@/components/erika/McKinseyMode";
+import { ConsultantMode } from "@/components/erika/ConsultantMode";
 import { BehaviorConfiguration } from "@/components/erika/BehaviorConfiguration";
 import { SystemLogs } from "@/components/erika/SystemLogs";
 import { ErikaProvider } from "@/contexts/ErikaContext";
@@ -25,7 +25,7 @@ const Index = () => {
       case 'query':
         return <QueryInterface />;
       case 'mckinsey':
-        return <McKinseyMode />;
+        return <ConsultantMode />;
       case 'behavior':
         return <BehaviorConfiguration />;
       case 'logs':

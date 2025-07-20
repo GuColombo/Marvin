@@ -31,7 +31,7 @@ const modules = [
   { id: 'memory', name: 'Memory', icon: Database, description: 'All indexed files & topics' },
   { id: 'digest', name: 'Digest View', icon: FileText, description: 'Summaries & insights' },
   { id: 'query', name: 'Query Terminal', icon: Search, description: 'Natural language queries' },
-  { id: 'mckinsey', name: 'McKinsey Mode', icon: TrendingUp, description: 'Strategic frameworks' },
+  { id: 'mckinsey', name: 'Consultant Mode', icon: TrendingUp, description: 'Strategic frameworks' },
   { id: 'behavior', name: 'Behavior Console', icon: Settings, description: 'AI configuration' },
   { id: 'logs', name: 'System Logs', icon: Activity, description: 'Processing activity' },
 ];

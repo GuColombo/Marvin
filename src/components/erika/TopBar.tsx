@@ -30,7 +30,7 @@ export function TopBar({ activeModule }: TopBarProps) {
       'memory': 'Memory',
       'digest': 'Digest View',
       'query': 'Query Terminal',
-      'mckinsey': 'McKinsey Mode',
+      'mckinsey': 'Consultant Mode',
       'behavior': 'Behavior Console',
       'logs': 'System Logs'
     };
@@ -123,7 +123,7 @@ export function TopBar({ activeModule }: TopBarProps) {
             <DropdownMenuItem className="p-3">
               <div>
                 <p className="text-caption-1 font-medium">Query ready</p>
-                <p className="text-caption-2 text-muted-foreground">McKinsey analysis available for review</p>
+                <p className="text-caption-2 text-muted-foreground">Consultant analysis available for review</p>
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>

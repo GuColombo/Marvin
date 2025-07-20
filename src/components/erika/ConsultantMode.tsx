@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-export function McKinseyMode() {
+export function ConsultantMode() {
   const [selectedFramework, setSelectedFramework] = useState('');
   const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
 
@@ -19,7 +19,7 @@ export function McKinseyMode() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-title-2 mb-2">McKinsey Mode</h1>
+        <h1 className="text-title-2 mb-2">Consultant Mode</h1>
         <p className="text-body text-muted-foreground">
           Apply strategic frameworks to your data for executive-level analysis
         </p>
