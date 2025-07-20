@@ -9,6 +9,10 @@ import { QueryInterface } from "@/components/erika/QueryInterface";
 import { ConsultantMode } from "@/components/erika/ConsultantMode";
 import { BehaviorConfiguration } from "@/components/erika/BehaviorConfiguration";
 import { SystemLogs } from "@/components/erika/SystemLogs";
+import { AboutErika } from "@/components/erika/AboutErika";
+import { Settings } from "@/components/erika/Settings";
+import { FileInspector } from "@/components/erika/FileInspector";
+import { ExportImport } from "@/components/erika/ExportImport";
 import { ErikaProvider } from "@/contexts/ErikaContext";
 
 const Index = () => {
@@ -26,8 +30,16 @@ const Index = () => {
         return <QueryInterface />;
       case 'mckinsey':
         return <ConsultantMode />;
+      case 'inspector':
+        return <FileInspector />;
+      case 'export':
+        return <ExportImport />;
       case 'behavior':
         return <BehaviorConfiguration />;
+      case 'settings':
+        return <Settings />;
+      case 'about':
+        return <AboutErika />;
       case 'logs':
         return <SystemLogs />;
       default:
@@ -42,7 +54,7 @@ const Index = () => {
           <AppSidebar activeModule={activeModule} setActiveModule={setActiveModule} />
           <div className="flex-1 flex flex-col">
             <TopBar activeModule={activeModule} />
-            <main className="flex-1 p-8">
+            <main className="flex-1 p-6 ml-2">{/* Added left margin and reduced padding */}
               <div className="max-w-7xl mx-auto">
                 {renderActiveModule()}
               </div>

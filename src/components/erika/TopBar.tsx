@@ -31,7 +31,11 @@ export function TopBar({ activeModule }: TopBarProps) {
       'digest': 'Digest View',
       'query': 'Query Terminal',
       'mckinsey': 'Consultant Mode',
+      'inspector': 'File Inspector',
+      'export': 'Export & Import',
       'behavior': 'Behavior Console',
+      'settings': 'Settings',
+      'about': 'About Erika',
       'logs': 'System Logs'
     };
     return titles[module as keyof typeof titles] || 'Erika';

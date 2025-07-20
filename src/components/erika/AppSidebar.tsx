@@ -6,7 +6,11 @@ import {
   TrendingUp, 
   Settings,
   Activity,
-  Brain
+  Brain,
+  Info,
+  FileSearch,
+  Download,
+  Upload
 } from "lucide-react";
 import {
   Sidebar,
@@ -32,7 +36,11 @@ const modules = [
   { id: 'digest', name: 'Digest View', icon: FileText, description: 'Summaries & insights' },
   { id: 'query', name: 'Query Terminal', icon: Search, description: 'Natural language queries' },
   { id: 'mckinsey', name: 'Consultant Mode', icon: TrendingUp, description: 'Strategic frameworks' },
+  { id: 'inspector', name: 'File Inspector', icon: FileSearch, description: 'Detailed file analysis' },
+  { id: 'export', name: 'Export & Import', icon: Download, description: 'Data portability' },
   { id: 'behavior', name: 'Behavior Console', icon: Settings, description: 'AI configuration' },
+  { id: 'settings', name: 'Settings', icon: Upload, description: 'System preferences' },
+  { id: 'about', name: 'About Erika', icon: Info, description: 'System information' },
   { id: 'logs', name: 'System Logs', icon: Activity, description: 'Processing activity' },
 ];
 
@@ -44,7 +52,7 @@ export function AppSidebar({ activeModule, setActiveModule }: AppSidebarProps) {
   const errorCount = files.filter(f => f.status === 'error').length;
 
   return (
-    <Sidebar className="w-72 sidebar-nav">
+    <Sidebar className="w-80 sidebar-nav border-r border-sidebar-border">
       <SidebarContent className="p-4">
         {/* Header */}
         <div className="mb-8">
