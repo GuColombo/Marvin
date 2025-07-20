@@ -5,36 +5,36 @@
 @tailwind utilities;
 
 :root {
-  /* Base colors with sophisticated neutrals */
-  --background: 220 13% 99%;
-  --background-elevated: 220 20% 98%;
-  --background-glass: 220 20% 95%;
-  --foreground: 222 84% 4.9%;
+  /* Sophisticated light color palette inspired by modern design */
+  --background: 220 15% 98%;
+  --background-elevated: 220 20% 96%;
+  --background-glass: 220 25% 94%;
+  --foreground: 225 15% 15%;
   
   /* Glass morphism card system */
-  --card: 220 20% 98%;
-  --card-foreground: 222 84% 4.9%;
-  --card-elevated: 220 30% 97%;
-  --card-glass: 220 20% 95%;
-  --card-border: 220 13% 91%;
+  --card: 220 25% 97%;
+  --card-foreground: 225 15% 15%;
+  --card-elevated: 220 30% 95%;
+  --card-glass: 220 25% 93%;
+  --card-border: 220 20% 88%;
   
   /* Popover system */
   --popover: 220 20% 98%;
   --popover-foreground: 222 84% 4.9%;
 
-  /* Sophisticated primary system - refined blue */
-  --primary: 221 83% 53%;
-  --primary-foreground: 210 40% 98%;
-  --primary-hover: 221 83% 58%;
-  --primary-active: 221 83% 48%;
-  --primary-subtle: 221 83% 95%;
-  --primary-glow: 221 83% 80%;
+  /* Sophisticated primary system - refined purple-blue */
+  --primary: 251 91% 67%;
+  --primary-foreground: 220 15% 98%;
+  --primary-hover: 251 91% 72%;
+  --primary-active: 251 91% 62%;
+  --primary-subtle: 251 91% 95%;
+  --primary-glow: 251 91% 85%;
 
   /* Enhanced secondary system */
-  --secondary: 220 14% 96%;
-  --secondary-foreground: 220 9% 46%;
-  --secondary-hover: 220 14% 93%;
-  --secondary-active: 220 14% 89%;
+  --secondary: 220 20% 94%;
+  --secondary-foreground: 225 12% 45%;
+  --secondary-hover: 220 20% 91%;
+  --secondary-active: 220 20% 87%;
 
   /* Refined accent system */
   --accent: 221 83% 95%;
@@ -92,42 +92,42 @@
 }
 
 .dark {
-  /* Dark base with sophisticated depth */
-  --background: 222 47% 4%;
-  --background-elevated: 222 47% 6%;
-  --background-glass: 222 47% 8%;
-  --foreground: 213 31% 91%;
+  /* Dark sophisticated palette inspired by modern design systems */
+  --background: 225 25% 8%;
+  --background-elevated: 225 25% 10%;
+  --background-glass: 225 25% 12%;
+  --foreground: 225 15% 92%;
   
   /* Glass morphism dark cards */
-  --card: 222 47% 6%;
-  --card-foreground: 213 31% 91%;
-  --card-elevated: 222 47% 8%;
-  --card-glass: 222 47% 10%;
-  --card-border: 215 25% 15%;
+  --card: 225 25% 10%;
+  --card-foreground: 225 15% 92%;
+  --card-elevated: 225 25% 12%;
+  --card-glass: 225 25% 14%;
+  --card-border: 225 20% 18%;
   
   /* Dark popover system */
   --popover: 222 47% 6%;
   --popover-foreground: 213 31% 91%;
 
   /* Vibrant primary in dark - enhanced luminosity */
-  --primary: 213 93% 68%;
-  --primary-foreground: 222 47% 4%;
-  --primary-hover: 213 93% 73%;
-  --primary-active: 213 93% 63%;
-  --primary-subtle: 213 93% 15%;
-  --primary-glow: 213 93% 85%;
+  --primary: 251 91% 72%;
+  --primary-foreground: 225 25% 8%;
+  --primary-hover: 251 91% 77%;
+  --primary-active: 251 91% 67%;
+  --primary-subtle: 251 91% 18%;
+  --primary-glow: 251 91% 85%;
 
   /* Dark secondary system */
-  --secondary: 215 25% 15%;
-  --secondary-foreground: 213 31% 91%;
-  --secondary-hover: 215 25% 18%;
-  --secondary-active: 215 25% 21%;
+  --secondary: 225 20% 16%;
+  --secondary-foreground: 225 15% 92%;
+  --secondary-hover: 225 20% 19%;
+  --secondary-active: 225 20% 22%;
 
   /* Dark accent system */
-  --accent: 213 93% 15%;
-  --accent-foreground: 213 93% 85%;
-  --accent-hover: 213 93% 18%;
-  --accent-active: 213 93% 21%;
+  --accent: 251 91% 18%;
+  --accent-foreground: 251 91% 85%;
+  --accent-hover: 251 91% 21%;
+  --accent-active: 251 91% 24%;
 
   /* Dark muted system */
   --muted: 215 25% 15%;

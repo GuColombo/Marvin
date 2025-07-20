@@ -116,7 +116,7 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
               {(processingCount > 0 || errorCount > 0) && (
                 <Badge 
                   variant={errorCount > 0 ? "destructive" : "secondary"}
-                  className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-xs"
+                  className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs font-medium border-2 border-background"
                 >
                   {processingCount + errorCount}
                 </Badge>
@@ -209,7 +209,7 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
               <Bell className="h-4 w-4" />
               <Badge 
                 variant="destructive" 
-                className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-xs"
+                className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs font-medium bg-destructive text-destructive-foreground border-2 border-background"
               >
                 3
               </Badge>

@@ -4,6 +4,7 @@ import { AppSidebar } from "@/components/erika/AppSidebar";
 import { TopBar } from "@/components/erika/TopBar";
 import { LoginPage } from "@/components/erika/LoginPage";
 import { Inbox } from "@/components/erika/Inbox";
+import { Dashboard } from "@/components/erika/Dashboard";
 import { MemoryViewer } from "@/components/erika/MemoryViewer";
 import { DigestView } from "@/components/erika/DigestView";
 import { QueryInterface } from "@/components/erika/QueryInterface";
@@ -22,7 +23,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
   const { isAuthenticated, login, isLoading } = useAuth();
-  const [activeModule, setActiveModule] = useState('inbox');
+  const [activeModule, setActiveModule] = useState('dashboard');
 
   // Show loading spinner while checking auth
   if (isLoading) {
@@ -43,6 +44,8 @@ const Index = () => {
 
   const renderActiveModule = () => {
     switch (activeModule) {
+      case 'dashboard':
+        return <Dashboard />;
       case 'inbox':
         return <Inbox />;
       case 'memory':
