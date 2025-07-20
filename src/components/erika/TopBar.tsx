@@ -25,6 +25,7 @@ export function TopBar({ activeModule }: TopBarProps) {
   const processingCount = files.filter(f => f.status === 'processing').length;
   const totalFiles = files.length;
   
+  
   const getModuleTitle = (module: string) => {
     const titles = {
       'inbox': 'Inbox',
@@ -42,11 +43,6 @@ export function TopBar({ activeModule }: TopBarProps) {
     return titles[module as keyof typeof titles] || 'Erika';
   };
 
-  const getStatusColor = () => {
-    if (processingCount > 0) return 'bg-warning';
-    if (totalFiles > 0) return 'bg-success';
-    return 'bg-muted-foreground';
-  };
 
   return (
     <header className="h-16 bg-background border-b border-border flex items-center justify-between px-6">
@@ -65,14 +61,6 @@ export function TopBar({ activeModule }: TopBarProps) {
             <div className="text-muted-foreground">•</div>
             <div>
               <h2 className="text-title-3 font-medium">{getModuleTitle(activeModule)}</h2>
-              <div className="flex items-center gap-2 text-caption-2 text-muted-foreground">
-                <div className={`w-2 h-2 rounded-full ${getStatusColor()}`} />
-                {processingCount > 0 ? (
-                  <span>Processing {processingCount} files...</span>
-                ) : (
-                  <span>{totalFiles} files indexed</span>
-                )}
-              </div>
             </div>
           </div>
         </div>
