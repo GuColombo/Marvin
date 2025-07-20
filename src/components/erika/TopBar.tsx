@@ -104,7 +104,7 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
       </div>
 
 
-      {/* Right Section - New Top Bar Icons */}
+      {/* Right Section - System Status, Settings, Notifications, User Avatar */}
       <div className="flex items-center gap-3">
         {/* System Status & Logs */}
         <DropdownMenu>
@@ -180,6 +180,62 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
           </DropdownMenuContent>
         </DropdownMenu>
 
+        {/* System Settings */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm">
+              <Settings className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-64 bg-background border shadow-lg z-50">
+            <DropdownMenuLabel>Settings</DropdownMenuLabel>
+            <DropdownMenuItem onClick={() => setActiveModule('settings')}>
+              <Settings className="mr-2 h-4 w-4" />
+              General Settings
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveModule('behavior')}>
+              <Sliders className="mr-2 h-4 w-4" />
+              Behavior Console
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* Notifications */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="relative">
+              <Bell className="h-4 w-4" />
+              <Badge 
+                variant="destructive" 
+                className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-xs"
+              >
+                3
+              </Badge>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-80 bg-background border shadow-lg z-50">
+            <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+            <DropdownMenuItem className="p-3">
+              <div>
+                <p className="text-caption-1 font-medium">New files detected</p>
+                <p className="text-caption-2 text-muted-foreground">5 files added to processing queue</p>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-3">
+              <div>
+                <p className="text-caption-1 font-medium">Classification complete</p>
+                <p className="text-caption-2 text-muted-foreground">Q3 Strategy doc tagged and indexed</p>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-3">
+              <div>
+                <p className="text-caption-1 font-medium">Query ready</p>
+                <p className="text-caption-2 text-muted-foreground">Consultant analysis available for review</p>
+              </div>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         {/* User Avatar */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -196,10 +252,6 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
               <User className="mr-2 h-4 w-4" />
               Profile Settings
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Bell className="mr-2 h-4 w-4" />
-              Notifications
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => setActiveModule('export')}>
               <Settings className="mr-2 h-4 w-4" />
@@ -209,26 +261,6 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
             <DropdownMenuItem>
               <Brain className="mr-2 h-4 w-4" />
               Sign Out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        {/* Settings */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm">
-              <Settings className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-64 bg-background border shadow-lg z-50">
-            <DropdownMenuLabel>Settings</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => setActiveModule('settings')}>
-              <Settings className="mr-2 h-4 w-4" />
-              General Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setActiveModule('behavior')}>
-              <Sliders className="mr-2 h-4 w-4" />
-              Behavior Console
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
