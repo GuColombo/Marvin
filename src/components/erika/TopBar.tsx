@@ -114,12 +114,13 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
             <Button variant="ghost" size="sm" className="relative">
               <Activity className="h-4 w-4" />
               {(processingCount > 0 || errorCount > 0) && (
-                <Badge 
-                  variant={errorCount > 0 ? "destructive" : "secondary"}
-                  className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs font-medium border-2 border-background"
+                <span 
+                  className={`absolute -top-2 -right-2 h-5 w-5 rounded-full flex items-center justify-center text-xs font-bold border-2 border-background shadow-lg ${
+                    errorCount > 0 ? 'bg-destructive text-destructive-foreground' : 'bg-primary text-primary-foreground'
+                  }`}
                 >
                   {processingCount + errorCount}
-                </Badge>
+                </span>
               )}
             </Button>
           </DropdownMenuTrigger>
@@ -207,12 +208,11 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm" className="relative">
               <Bell className="h-4 w-4" />
-              <Badge 
-                variant="destructive" 
-                className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs font-medium bg-destructive text-destructive-foreground border-2 border-background"
+              <span 
+                className="absolute -top-2 -right-2 h-5 w-5 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center text-xs font-bold border-2 border-background shadow-lg"
               >
                 3
-              </Badge>
+              </span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80 bg-background border shadow-lg z-50">
