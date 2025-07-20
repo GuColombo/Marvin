@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { Search, Bell, Settings, Brain, Activity, Sliders, Info } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Bell, Settings, Brain, Sliders, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -19,30 +17,11 @@ interface TopBarProps {
 }
 
 export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
-  const [searchQuery, setSearchQuery] = useState('');
   const { state } = useErika();
   const { files } = state;
   
   const processingCount = files.filter(f => f.status === 'processing').length;
   const totalFiles = files.length;
-  
-  
-  const getModuleTitle = (module: string) => {
-    const titles = {
-      'inbox': 'Inbox',
-      'memory': 'Memory',
-      'digest': 'Digest View',
-      'query': 'Query Terminal',
-      'mckinsey': 'Consultant Mode',
-      'inspector': 'File Inspector',
-      'export': 'Export & Import',
-      'behavior': 'Behavior Console',
-      'settings': 'Settings',
-      'about': 'About Erika',
-      'logs': 'System Logs'
-    };
-    return titles[module as keyof typeof titles] || 'Erika';
-  };
 
 
   return (
@@ -63,18 +42,6 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
         </div>
       </div>
 
-      {/* Center Section - Global Search */}
-      <div className="flex-1 max-w-md mx-8">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search across all memory..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 search-input"
-          />
-        </div>
-      </div>
 
       {/* Right Section - Notifications and Settings */}
       <div className="flex items-center gap-3">
