@@ -58,10 +58,6 @@ export function TopBar({ activeModule }: TopBarProps) {
               <h1 className="text-headline font-semibold">ERIKA</h1>
               <p className="text-caption-2 text-muted-foreground">Executive Intelligence</p>
             </div>
-            <div className="text-muted-foreground">•</div>
-            <div>
-              <h2 className="text-title-3 font-medium">{getModuleTitle(activeModule)}</h2>
-            </div>
           </div>
         </div>
       </div>
