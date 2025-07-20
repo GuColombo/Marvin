@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Bell, Settings, Brain, Activity } from 'lucide-react';
+import { Search, Bell, Settings, Brain, Activity, Sliders, Info } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -91,21 +91,8 @@ export function TopBar({ activeModule }: TopBarProps) {
         </div>
       </div>
 
-      {/* Right Section - Status and Settings */}
+      {/* Right Section - Notifications and Settings */}
       <div className="flex items-center gap-3">
-        {/* Activity Indicator */}
-        <Button variant="ghost" size="sm" className="relative">
-          <Activity className="h-4 w-4" />
-          {processingCount > 0 && (
-            <Badge 
-              variant="secondary" 
-              className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-xs"
-            >
-              {processingCount}
-            </Badge>
-          )}
-        </Button>
-
         {/* Notifications */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -119,7 +106,7 @@ export function TopBar({ activeModule }: TopBarProps) {
               </Badge>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-80">
+          <DropdownMenuContent align="end" className="w-80 bg-background border shadow-lg z-50">
             <div className="p-3 border-b">
               <h3 className="text-callout font-semibold">Notifications</h3>
             </div>
@@ -151,14 +138,40 @@ export function TopBar({ activeModule }: TopBarProps) {
               <Settings className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem>Preferences</DropdownMenuItem>
-            <DropdownMenuItem>Behavior Settings</DropdownMenuItem>
+          <DropdownMenuContent align="end" className="w-64 bg-background border shadow-lg z-50">
+            {/* System Status Section */}
+            <div className="p-3 border-b">
+              <h3 className="text-callout font-semibold mb-2">System Status</h3>
+              <div className="space-y-1">
+                <div className="flex justify-between text-caption-2">
+                  <span className="text-muted-foreground">Files Indexed</span>
+                  <span className="font-medium">{totalFiles}</span>
+                </div>
+                <div className="flex justify-between text-caption-2">
+                  <span className="text-muted-foreground">Processing</span>
+                  <span className="font-medium">{processingCount}</span>
+                </div>
+                <div className="flex justify-between text-caption-2">
+                  <span className="text-muted-foreground">Topics</span>
+                  <span className="font-medium">{new Set(files.flatMap(f => f.topics || [])).size}</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Settings Items */}
+            <DropdownMenuItem>
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Sliders className="mr-2 h-4 w-4" />
+              Behavior Console
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>System Status</DropdownMenuItem>
-            <DropdownMenuItem>Export Data</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>About Erika</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Info className="mr-2 h-4 w-4" />
+              About Erika
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

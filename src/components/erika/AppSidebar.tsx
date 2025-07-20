@@ -37,9 +37,6 @@ const modules = [
   { id: 'mckinsey', name: 'Consultant Mode', icon: TrendingUp, description: 'Strategic frameworks' },
   { id: 'inspector', name: 'File Inspector', icon: FileSearch, description: 'Detailed file analysis' },
   { id: 'export', name: 'Export & Import', icon: Download, description: 'Data portability' },
-  { id: 'behavior', name: 'Behavior Console', icon: Settings, description: 'AI configuration' },
-  { id: 'settings', name: 'Settings', icon: Upload, description: 'System preferences' },
-  { id: 'about', name: 'About Erika', icon: Info, description: 'System information' },
   { id: 'logs', name: 'System Logs', icon: Activity, description: 'Processing activity' },
 ];
 
@@ -101,24 +98,6 @@ export function AppSidebar({ activeModule, setActiveModule }: AppSidebarProps) {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Quick Stats */}
-        <div className="mt-8 p-4 bg-muted rounded-lg">
-          <h3 className="text-callout font-semibold mb-3">System Status</h3>
-          <div className="space-y-2">
-            <div className="flex justify-between text-caption-2">
-              <span className="text-muted-foreground">Files Indexed</span>
-              <span className="font-medium">{files.length}</span>
-            </div>
-            <div className="flex justify-between text-caption-2">
-              <span className="text-muted-foreground">Processing</span>
-              <span className="font-medium">{processingCount}</span>
-            </div>
-            <div className="flex justify-between text-caption-2">
-              <span className="text-muted-foreground">Topics</span>
-              <span className="font-medium">{new Set(files.flatMap(f => f.topics || [])).size}</span>
-            </div>
-          </div>
-        </div>
       </SidebarContent>
     </Sidebar>
   );
