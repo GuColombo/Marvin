@@ -21,7 +21,8 @@ export function Inbox() {
           size: file.size,
           status: 'processing',
           content: '',
-          topics: []
+          topics: [],
+          timestamp: new Date()
         }
       });
     });
