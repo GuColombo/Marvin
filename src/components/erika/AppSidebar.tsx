@@ -51,7 +51,7 @@ export function AppSidebar({ activeModule, setActiveModule }: AppSidebarProps) {
   const errorCount = files.filter(f => f.status === 'error').length;
 
   return (
-    <Sidebar className="sidebar-nav border-r border-sidebar-border" collapsible="icon">
+    <Sidebar className="sidebar-nav border-r border-sidebar-border" collapsible="offcanvas">
       <SidebarContent className="p-4">
         {/* Navigation */}
         <SidebarGroup>
