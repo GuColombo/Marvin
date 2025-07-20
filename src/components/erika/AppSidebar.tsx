@@ -52,7 +52,7 @@ export function AppSidebar({ activeModule, setActiveModule }: AppSidebarProps) {
   const errorCount = files.filter(f => f.status === 'error').length;
 
   return (
-    <Sidebar className="w-80 sidebar-nav border-r border-sidebar-border">
+    <Sidebar className="w-64 md:w-72 lg:w-80 sidebar-nav border-r border-sidebar-border">
       <SidebarContent className="p-4">
         {/* Header */}
         <div className="mb-8">
