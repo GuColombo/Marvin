@@ -15,9 +15,10 @@ import { useErika } from '@/contexts/ErikaContext';
 
 interface TopBarProps {
   activeModule: string;
+  setActiveModule: (module: string) => void;
 }
 
-export function TopBar({ activeModule }: TopBarProps) {
+export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const { state } = useErika();
   const { files } = state;
@@ -143,16 +144,16 @@ export function TopBar({ activeModule }: TopBarProps) {
             </div>
             
             {/* Settings Items */}
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveModule('settings')}>
               <Settings className="mr-2 h-4 w-4" />
               Settings
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveModule('behavior')}>
               <Sliders className="mr-2 h-4 w-4" />
               Behavior Console
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setActiveModule('about')}>
               <Info className="mr-2 h-4 w-4" />
               About Erika
             </DropdownMenuItem>
