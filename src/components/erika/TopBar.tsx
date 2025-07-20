@@ -48,21 +48,10 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
 
   return (
     <header className="h-16 bg-background border-b border-border flex items-center justify-between px-6">
-      {/* Left Section - Sidebar Toggle, Branding, About & Module */}
+      {/* Left Section - Sidebar Toggle, About, Branding & Module */}
       <div className="flex items-center gap-4">
         <SidebarTrigger className="mr-2" />
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <Brain className="h-4 w-4 text-primary-foreground" />
-          </div>
-          <div className="flex items-center gap-4">
-            <div>
-              <h1 className="text-headline font-semibold">ERIKA</h1>
-              <p className="text-caption-2 text-muted-foreground">Executive Intelligence</p>
-            </div>
-          </div>
-        </div>
-
+        
         {/* About Erika */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -100,6 +89,18 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <Brain className="h-4 w-4 text-primary-foreground" />
+          </div>
+          <div className="flex items-center gap-4">
+            <div>
+              <h1 className="text-headline font-semibold">ERIKA</h1>
+              <p className="text-caption-2 text-muted-foreground">Executive Intelligence</p>
+            </div>
+          </div>
+        </div>
       </div>
 
 
