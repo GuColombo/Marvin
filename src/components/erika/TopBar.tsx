@@ -48,7 +48,7 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
 
   return (
     <header className="h-16 bg-background border-b border-border flex items-center justify-between px-6">
-      {/* Left Section - Sidebar Toggle, Branding & Module */}
+      {/* Left Section - Sidebar Toggle, Branding, About & Module */}
       <div className="flex items-center gap-4">
         <SidebarTrigger className="mr-2" />
         <div className="flex items-center gap-3">
@@ -62,6 +62,44 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
             </div>
           </div>
         </div>
+
+        {/* About Erika */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm">
+              <Info className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-80 bg-background border shadow-lg z-50">
+            <DropdownMenuLabel>About Erika</DropdownMenuLabel>
+            <div className="p-3 border-b">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <Brain className="h-4 w-4 text-primary-foreground" />
+                </div>
+                <div>
+                  <h3 className="text-callout font-semibold">ERIKA</h3>
+                  <p className="text-caption-2 text-muted-foreground">Executive Intelligence v2.1.0</p>
+                </div>
+              </div>
+              <p className="text-caption-2 text-muted-foreground">
+                Privacy-first AI assistant for document analysis and strategic insights.
+              </p>
+            </div>
+            <DropdownMenuItem onClick={() => setActiveModule('about')}>
+              <Info className="mr-2 h-4 w-4" />
+              Full Documentation
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <CheckCircle className="mr-2 h-4 w-4" />
+              Version History
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Activity className="mr-2 h-4 w-4" />
+              What's New
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
 
@@ -170,44 +208,6 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
             <DropdownMenuItem>
               <Brain className="mr-2 h-4 w-4" />
               Sign Out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        {/* About Erika */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm">
-              <Info className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-80 bg-background border shadow-lg z-50">
-            <DropdownMenuLabel>About Erika</DropdownMenuLabel>
-            <div className="p-3 border-b">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <Brain className="h-4 w-4 text-primary-foreground" />
-                </div>
-                <div>
-                  <h3 className="text-callout font-semibold">ERIKA</h3>
-                  <p className="text-caption-2 text-muted-foreground">Executive Intelligence v2.1.0</p>
-                </div>
-              </div>
-              <p className="text-caption-2 text-muted-foreground">
-                Privacy-first AI assistant for document analysis and strategic insights.
-              </p>
-            </div>
-            <DropdownMenuItem onClick={() => setActiveModule('about')}>
-              <Info className="mr-2 h-4 w-4" />
-              Full Documentation
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CheckCircle className="mr-2 h-4 w-4" />
-              Version History
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Activity className="mr-2 h-4 w-4" />
-              What's New
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
