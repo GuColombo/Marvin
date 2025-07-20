@@ -176,7 +176,7 @@ All colors MUST be HSL. Professional, executive-grade interface design.
   
   /* Sidebar Navigation */
   .sidebar-nav {
-    @apply bg-sidebar-background border-r border-sidebar-border;
+    @apply bg-sidebar border-r border-sidebar-border;
   }
   
   .sidebar-item {
