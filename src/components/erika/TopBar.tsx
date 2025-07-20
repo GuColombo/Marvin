@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useErika } from '@/contexts/ErikaContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { ModeToggle } from '@/components/mode-toggle';
 
 interface TopBarProps {
   activeModule: string;
@@ -269,9 +268,6 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-
-        {/* Theme Toggle */}
-        <ModeToggle />
       </div>
     </header>
   );

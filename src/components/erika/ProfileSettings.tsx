@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User, Mail, Shield, Bell, Palette, Globe } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,8 +8,10 @@ import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useTheme } from '@/components/theme-provider';
 
 export function ProfileSettings() {
+  const { theme, setTheme } = useTheme();
   const [profile, setProfile] = useState({
     name: 'Executive User',
     email: 'executive@company.com',
@@ -25,10 +27,14 @@ export function ProfileSettings() {
   });
 
   const [preferences, setPreferences] = useState({
-    theme: 'system',
     language: 'en',
     timezone: 'UTC'
   });
+
+  // Update preferences when theme changes from the theme provider
+  useEffect(() => {
+    // This ensures the UI reflects the current theme
+  }, [theme]);
 
   return (
     <div className="space-y-6">
@@ -202,10 +208,8 @@ export function ProfileSettings() {
             <div className="space-y-2">
               <Label htmlFor="theme">Theme</Label>
               <Select
-                value={preferences.theme}
-                onValueChange={(value) => 
-                  setPreferences(prev => ({ ...prev, theme: value }))
-                }
+                value={theme}
+                onValueChange={(value: "light" | "dark" | "system") => setTheme(value)}
               >
                 <SelectTrigger>
                   <SelectValue />
