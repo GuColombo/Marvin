@@ -6,7 +6,6 @@ import {
   TrendingUp, 
   Settings,
   Activity,
-  Brain,
   Info,
   FileSearch,
   Download,
@@ -52,21 +51,8 @@ export function AppSidebar({ activeModule, setActiveModule }: AppSidebarProps) {
   const errorCount = files.filter(f => f.status === 'error').length;
 
   return (
-    <Sidebar className="w-64 md:w-72 lg:w-80 sidebar-nav border-r border-sidebar-border">
+    <Sidebar className="sidebar-nav border-r border-sidebar-border" collapsible="icon">
       <SidebarContent className="p-4">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Brain className="h-4 w-4 text-primary-foreground" />
-            </div>
-            <div>
-              <h1 className="text-headline font-semibold">ERIKA</h1>
-              <p className="text-caption-2 text-muted-foreground">Executive Intelligence</p>
-            </div>
-          </div>
-        </div>
-
         {/* Navigation */}
         <SidebarGroup>
           <SidebarGroupLabel className="text-caption-1 font-semibold text-muted-foreground uppercase tracking-wider mb-3">

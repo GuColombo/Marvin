@@ -3,6 +3,7 @@ import { Search, Bell, Settings, Brain, Activity } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -49,19 +50,29 @@ export function TopBar({ activeModule }: TopBarProps) {
 
   return (
     <header className="h-16 bg-background border-b border-border flex items-center justify-between px-6">
-      {/* Left Section - Module Title and Status */}
+      {/* Left Section - Sidebar Toggle, Branding & Module */}
       <div className="flex items-center gap-4">
+        <SidebarTrigger className="mr-2" />
         <div className="flex items-center gap-3">
-          <Brain className="h-6 w-6 text-primary" />
-          <div>
-            <h1 className="text-headline font-semibold">{getModuleTitle(activeModule)}</h1>
-            <div className="flex items-center gap-2 text-caption-2 text-muted-foreground">
-              <div className={`w-2 h-2 rounded-full ${getStatusColor()}`} />
-              {processingCount > 0 ? (
-                <span>Processing {processingCount} files...</span>
-              ) : (
-                <span>{totalFiles} files indexed</span>
-              )}
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <Brain className="h-4 w-4 text-primary-foreground" />
+          </div>
+          <div className="flex items-center gap-4">
+            <div>
+              <h1 className="text-headline font-semibold">ERIKA</h1>
+              <p className="text-caption-2 text-muted-foreground">Executive Intelligence</p>
+            </div>
+            <div className="text-muted-foreground">•</div>
+            <div>
+              <h2 className="text-title-3 font-medium">{getModuleTitle(activeModule)}</h2>
+              <div className="flex items-center gap-2 text-caption-2 text-muted-foreground">
+                <div className={`w-2 h-2 rounded-full ${getStatusColor()}`} />
+                {processingCount > 0 ? (
+                  <span>Processing {processingCount} files...</span>
+                ) : (
+                  <span>{totalFiles} files indexed</span>
+                )}
+              </div>
             </div>
           </div>
         </div>
