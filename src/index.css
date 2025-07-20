@@ -2,107 +2,156 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Apple-inspired Design System for Erika Executive AI Assistant
-All colors MUST be HSL. Professional, executive-grade interface design.
+/* Apple HIG-Inspired Design System for Erika Executive AI Assistant
+Professional, executive-grade interface following Apple's design principles:
+- Adaptive colors for light/dark modes
+- Clear visual hierarchy
+- Proper contrast ratios
+- Semantic color system
 */
 
 @layer base {
   :root {
-    /* Base Colors - Clean whites and deep grays */
-    --background: 0 0% 99%;
-    --foreground: 0 0% 9%;
+    /* Apple-inspired Semantic Color System */
+    
+    /* Background hierarchy - Base and elevated surfaces */
+    --background: 0 0% 100%;           /* Pure white base */
+    --background-elevated: 0 0% 98%;   /* Elevated surfaces */
+    --foreground: 220 71% 4%;          /* Primary text */
+    
+    /* Surface colors with proper depth */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
+    --card-foreground: 220 71% 4%;
+    --card-elevated: 0 0% 98%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
+    --popover-foreground: 220 71% 4%;
     
-    /* Executive Blue - Primary brand color */
-    --primary: 214 100% 47%;
+    /* Primary - Apple's System Blue adapted for professional use */
+    --primary: 214 89% 52%;
     --primary-foreground: 0 0% 100%;
-    --primary-muted: 214 100% 97%;
+    --primary-hover: 214 89% 47%;
+    --primary-active: 214 89% 42%;
     
-    /* Professional Neutrals */
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 9%;
+    /* Secondary system colors */
+    --secondary: 220 13% 95%;
+    --secondary-foreground: 220 71% 4%;
+    --secondary-hover: 220 13% 91%;
     
-    /* Status Colors */
+    /* Muted colors for secondary content */
+    --muted: 220 13% 95%;
+    --muted-foreground: 220 9% 46%;
+    
+    /* Interactive elements */
+    --accent: 220 13% 95%;
+    --accent-foreground: 220 71% 4%;
+    --accent-hover: 220 13% 91%;
+    
+    /* Input system */
+    --input: 220 13% 95%;
+    --input-border: 220 13% 85%;
+    --input-focus: 214 89% 52%;
+    
+    /* Border system */
+    --border: 220 13% 91%;
+    --border-light: 220 13% 95%;
+    
+    /* Status colors - Apple guidelines compliant */
     --success: 142 71% 45%;
     --success-foreground: 0 0% 100%;
     --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
+    --warning-foreground: 39 100% 7%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     
-    /* Interface Elements */
-    --border: 0 0% 89%;
-    --input: 0 0% 89%;
-    --ring: 214 100% 47%;
-    --radius: 0.375rem;
+    /* Text hierarchy for accessibility */
+    --text-primary: 220 71% 4%;
+    --text-secondary: 220 9% 46%;
+    --text-tertiary: 220 9% 64%;
+    --text-quaternary: 220 9% 78%;
     
-    /* Status Colors with foregrounds */
-    --success-foreground: 0 0% 100%;
-    --warning-foreground: 0 0% 100%;
-    --destructive-foreground: 0 0% 100%;
+    /* Ring/focus indicators */
+    --ring: 214 89% 52%;
+    --radius: 0.75rem;
     
-    /* Sidebar */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 9%;
-    --sidebar-border: 0 0% 91%;
-    --sidebar-primary: 214 100% 47%;
+    /* Sidebar colors */
+    --sidebar-background: 220 13% 98%;
+    --sidebar-foreground: 220 71% 4%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-primary: 214 89% 52%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 9%;
-    --sidebar-ring: 214 100% 47%;
-    
-    /* Status Indicators */
-    --status-processing: 38 92% 50%;
-    --status-complete: 142 71% 45%;
-    --status-error: 0 84% 60%;
-    --status-pending: 214 100% 47%;
+    --sidebar-accent: 220 13% 95%;
+    --sidebar-accent-foreground: 220 71% 4%;
+    --sidebar-ring: 214 89% 52%;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    /* Apple Dark Mode - Base and elevated backgrounds for depth */
+    --background: 220 71% 4%;          /* Base dark */
+    --background-elevated: 215 28% 7%; /* Elevated surfaces */
+    --foreground: 213 27% 84%;         /* Primary text */
     
-    --primary: 214 100% 60%;
-    --primary-foreground: 0 0% 9%;
-    --primary-muted: 214 100% 8%;
+    /* Elevated surfaces for layering */
+    --card: 215 28% 7%;
+    --card-foreground: 213 27% 84%;
+    --card-elevated: 215 28% 10%;
+    --popover: 215 28% 7%;
+    --popover-foreground: 213 27% 84%;
     
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    /* Primary - Brighter and more vibrant in dark mode */
+    --primary: 214 89% 58%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 214 89% 52%;
+    --primary-active: 214 89% 48%;
     
-    --success: 142 71% 45%;
+    /* Secondary system */
+    --secondary: 215 28% 12%;
+    --secondary-foreground: 213 27% 84%;
+    --secondary-hover: 215 28% 16%;
+    
+    /* Muted - subtle but visible */
+    --muted: 215 28% 12%;
+    --muted-foreground: 217 11% 65%;
+    
+    /* Interactive elements */
+    --accent: 215 28% 12%;
+    --accent-foreground: 213 27% 84%;
+    --accent-hover: 215 28% 16%;
+    
+    /* Input system for dark mode */
+    --input: 215 28% 12%;
+    --input-border: 215 28% 20%;
+    --input-focus: 214 89% 58%;
+    
+    /* Border system */
+    --border: 215 28% 16%;
+    --border-light: 215 28% 12%;
+    
+    /* Status colors - adjusted for dark mode visibility */
+    --success: 142 71% 52%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
+    --warning: 38 92% 60%;
+    --warning-foreground: 39 100% 7%;
+    --destructive: 0 84% 65%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 214 100% 60%;
+    /* Text hierarchy for dark mode */
+    --text-primary: 213 27% 84%;
+    --text-secondary: 217 11% 65%;
+    --text-tertiary: 217 11% 48%;
+    --text-quaternary: 217 11% 32%;
     
-    --sidebar-background: 0 0% 2%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 12%;
-    --sidebar-primary: 214 100% 60%;
-    --sidebar-primary-foreground: 0 0% 9%;
-    --sidebar-accent: 0 0% 14.9%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-ring: 214 100% 60%;
+    /* Ring/focus */
+    --ring: 214 89% 58%;
+    
+    /* Sidebar in dark mode */
+    --sidebar-background: 220 71% 2%;
+    --sidebar-foreground: 213 27% 84%;
+    --sidebar-border: 215 28% 12%;
+    --sidebar-primary: 214 89% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 28% 12%;
+    --sidebar-accent-foreground: 213 27% 84%;
+    --sidebar-ring: 214 89% 58%;
   }
 }
 
@@ -112,111 +161,173 @@ All colors MUST be HSL. Professional, executive-grade interface design.
   }
   
   body {
-    @apply bg-background text-foreground font-medium;
-    font-feature-settings: "cv11", "ss01";
-    font-variation-settings: "opsz" 32;
+    @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
-  /* Executive Typography Scale */
-  .text-display {
-    @apply text-4xl font-semibold tracking-tight;
+}
+
+/* Apple HIG Typography System */
+.text-title-1 {
+  font-size: 2.125rem;
+  line-height: 1.19;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  color: hsl(var(--text-primary));
+}
+
+.text-title-2 {
+  font-size: 1.75rem;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.017em;
+  color: hsl(var(--text-primary));
+}
+
+.text-title-3 {
+  font-size: 1.375rem;
+  line-height: 1.27;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: hsl(var(--text-primary));
+}
+
+.text-headline {
+  font-size: 1.0625rem;
+  line-height: 1.33;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+  color: hsl(var(--text-primary));
+}
+
+.text-body {
+  font-size: 1rem;
+  line-height: 1.47;
+  font-weight: 400;
+  color: hsl(var(--text-primary));
+}
+
+.text-callout {
+  font-size: 0.9375rem;
+  line-height: 1.33;
+  font-weight: 400;
+  color: hsl(var(--text-secondary));
+}
+
+.text-caption-1 {
+  font-size: 0.75rem;
+  line-height: 1.33;
+  font-weight: 400;
+  color: hsl(var(--text-tertiary));
+}
+
+.text-caption-2 {
+  font-size: 0.6875rem;
+  line-height: 1.27;
+  font-weight: 400;
+  color: hsl(var(--text-tertiary));
+}
+
+/* Enhanced Button Styles */
+.btn-primary {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: calc(var(--radius) - 2px);
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+  background: hsl(var(--primary-hover));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -2px hsl(var(--primary) / 0.25);
+}
+
+.btn-primary:active {
+  background: hsl(var(--primary-active));
+  transform: translateY(0);
+}
+
+/* Enhanced Cards with Apple-like elevation */
+.card-enhanced {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  box-shadow: 0 2px 8px -2px hsl(var(--foreground) / 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-enhanced:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -5px hsl(var(--foreground) / 0.15);
+}
+
+/* Improved Sidebar Styles */
+.sidebar-item-active {
+  background: hsl(var(--sidebar-primary));
+  color: hsl(var(--sidebar-primary-foreground));
+  box-shadow: 0 2px 8px -2px hsl(var(--sidebar-primary) / 0.3);
+}
+
+.sidebar-item-inactive {
+  color: hsl(var(--sidebar-foreground));
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-item-inactive:hover {
+  background: hsl(var(--sidebar-accent));
+  color: hsl(var(--sidebar-accent-foreground));
+}
+
+/* Apple-style Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
-  
-  .text-title-1 {
-    @apply text-3xl font-semibold tracking-tight;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .text-title-2 {
-    @apply text-2xl font-semibold tracking-tight;
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
   }
-  
-  .text-title-3 {
-    @apply text-xl font-semibold tracking-tight;
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
-  
-  .text-headline {
-    @apply text-lg font-semibold;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
   }
-  
-  .text-body {
-    @apply text-base;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .text-callout {
-    @apply text-sm font-medium;
-  }
-  
-  .text-caption-1 {
-    @apply text-sm;
-  }
-  
-  .text-caption-2 {
-    @apply text-xs;
-  }
-  
-  /* Status Indicators */
-  .status-processing {
-    @apply bg-warning/10 text-warning border-warning/20;
-  }
-  
-  .status-complete {
-    @apply bg-success/10 text-success border-success/20;
-  }
-  
-  .status-error {
-    @apply bg-destructive/10 text-destructive border-destructive/20;
-  }
-  
-  .status-pending {
-    @apply bg-primary/10 text-primary border-primary/20;
-  }
-  
-  /* Executive Cards */
-  .executive-card {
-    @apply bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-200;
-  }
-  
-  .executive-card-compact {
-    @apply bg-card border border-border rounded-md p-4 shadow-sm hover:shadow-md transition-all duration-200;
-  }
-  
-  /* Sidebar Navigation */
-  .sidebar-nav {
-    @apply bg-sidebar border-r border-sidebar-border;
-  }
-  
-  .sidebar-item {
-    @apply flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors;
-  }
-  
-  .sidebar-item-active {
-    @apply bg-sidebar-primary text-sidebar-primary-foreground;
-  }
-  
-  .sidebar-item-inactive {
-    @apply text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground;
-  }
-  
-  /* Search and Input Styling */
-  .search-input {
-    @apply w-full px-4 py-2 bg-background border border-border rounded-md text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent;
-  }
-  
-  /* Animations */
-  .fade-in {
-    animation: fadeIn 0.2s ease-out;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-4px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus States */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
 }
