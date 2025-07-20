@@ -209,46 +209,6 @@ export function Settings() {
         </Card>
       </div>
 
-      {/* Interface Settings */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-headline flex items-center gap-2">
-            <Palette className="h-5 w-5" />
-            Interface
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <Label htmlFor="dark-mode" className="text-callout font-medium">
-                Dark Mode
-              </Label>
-              <p className="text-caption-2 text-muted-foreground">
-                Switch to dark theme for better focus
-              </p>
-            </div>
-            <Switch
-              id="dark-mode"
-              checked={darkMode}
-              onCheckedChange={setDarkMode}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-callout font-medium">Sidebar Width</Label>
-            <Select defaultValue="standard">
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="compact">Compact</SelectItem>
-                <SelectItem value="standard">Standard</SelectItem>
-                <SelectItem value="wide">Wide</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Save Button */}
       <div className="flex justify-end gap-2">
