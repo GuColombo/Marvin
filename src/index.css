@@ -1,158 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Apple HIG-Inspired Design System for Erika Executive AI Assistant
-Professional, executive-grade interface following Apple's design principles:
-- Adaptive colors for light/dark modes
-- Clear visual hierarchy
-- Proper contrast ratios
-- Semantic color system
-*/
+:root {
+  /* Base colors with sophisticated neutrals */
+  --background: 220 13% 99%;
+  --background-elevated: 220 20% 98%;
+  --background-glass: 220 20% 95%;
+  --foreground: 222 84% 4.9%;
+  
+  /* Glass morphism card system */
+  --card: 220 20% 98%;
+  --card-foreground: 222 84% 4.9%;
+  --card-elevated: 220 30% 97%;
+  --card-glass: 220 20% 95%;
+  --card-border: 220 13% 91%;
+  
+  /* Popover system */
+  --popover: 220 20% 98%;
+  --popover-foreground: 222 84% 4.9%;
 
-@layer base {
-  :root {
-    /* Apple-inspired Semantic Color System */
-    
-    /* Background hierarchy - Base and elevated surfaces */
-    --background: 0 0% 100%;           /* Pure white base */
-    --background-elevated: 0 0% 98%;   /* Elevated surfaces */
-    --foreground: 220 71% 4%;          /* Primary text */
-    
-    /* Surface colors with proper depth */
-    --card: 0 0% 100%;
-    --card-foreground: 220 71% 4%;
-    --card-elevated: 0 0% 98%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 71% 4%;
-    
-    /* Primary - Apple's System Blue adapted for professional use */
-    --primary: 214 89% 52%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 214 89% 47%;
-    --primary-active: 214 89% 42%;
-    
-    /* Secondary system colors */
-    --secondary: 220 13% 95%;
-    --secondary-foreground: 220 71% 4%;
-    --secondary-hover: 220 13% 91%;
-    
-    /* Muted colors for secondary content */
-    --muted: 220 13% 95%;
-    --muted-foreground: 220 9% 46%;
-    
-    /* Interactive elements */
-    --accent: 220 13% 95%;
-    --accent-foreground: 220 71% 4%;
-    --accent-hover: 220 13% 91%;
-    
-    /* Input system */
-    --input: 220 13% 95%;
-    --input-border: 220 13% 85%;
-    --input-focus: 214 89% 52%;
-    
-    /* Border system */
-    --border: 220 13% 91%;
-    --border-light: 220 13% 95%;
-    
-    /* Status colors - Apple guidelines compliant */
-    --success: 142 71% 45%;
-    --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 39 100% 7%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    
-    /* Text hierarchy for accessibility */
-    --text-primary: 220 71% 4%;
-    --text-secondary: 220 9% 46%;
-    --text-tertiary: 220 9% 64%;
-    --text-quaternary: 220 9% 78%;
-    
-    /* Ring/focus indicators */
-    --ring: 214 89% 52%;
-    --radius: 0.75rem;
-    
-    /* Sidebar colors */
-    --sidebar-background: 220 13% 98%;
-    --sidebar-foreground: 220 71% 4%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-primary: 214 89% 52%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 13% 95%;
-    --sidebar-accent-foreground: 220 71% 4%;
-    --sidebar-ring: 214 89% 52%;
-  }
+  /* Sophisticated primary system - refined blue */
+  --primary: 221 83% 53%;
+  --primary-foreground: 210 40% 98%;
+  --primary-hover: 221 83% 58%;
+  --primary-active: 221 83% 48%;
+  --primary-subtle: 221 83% 95%;
+  --primary-glow: 221 83% 80%;
 
-  .dark {
-    /* Apple Dark Mode - Base and elevated backgrounds for depth */
-    --background: 220 71% 4%;          /* Base dark */
-    --background-elevated: 215 28% 7%; /* Elevated surfaces */
-    --foreground: 213 27% 84%;         /* Primary text */
-    
-    /* Elevated surfaces for layering */
-    --card: 215 28% 7%;
-    --card-foreground: 213 27% 84%;
-    --card-elevated: 215 28% 10%;
-    --popover: 215 28% 7%;
-    --popover-foreground: 213 27% 84%;
-    
-    /* Primary - Brighter and more vibrant in dark mode */
-    --primary: 214 89% 58%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 214 89% 52%;
-    --primary-active: 214 89% 48%;
-    
-    /* Secondary system */
-    --secondary: 215 28% 12%;
-    --secondary-foreground: 213 27% 84%;
-    --secondary-hover: 215 28% 16%;
-    
-    /* Muted - subtle but visible */
-    --muted: 215 28% 12%;
-    --muted-foreground: 217 11% 65%;
-    
-    /* Interactive elements */
-    --accent: 215 28% 12%;
-    --accent-foreground: 213 27% 84%;
-    --accent-hover: 215 28% 16%;
-    
-    /* Input system for dark mode */
-    --input: 215 28% 12%;
-    --input-border: 215 28% 20%;
-    --input-focus: 214 89% 58%;
-    
-    /* Border system */
-    --border: 215 28% 16%;
-    --border-light: 215 28% 12%;
-    
-    /* Status colors - adjusted for dark mode visibility */
-    --success: 142 71% 52%;
-    --success-foreground: 0 0% 100%;
-    --warning: 38 92% 60%;
-    --warning-foreground: 39 100% 7%;
-    --destructive: 0 84% 65%;
-    --destructive-foreground: 0 0% 100%;
-    
-    /* Text hierarchy for dark mode */
-    --text-primary: 213 27% 84%;
-    --text-secondary: 217 11% 65%;
-    --text-tertiary: 217 11% 48%;
-    --text-quaternary: 217 11% 32%;
-    
-    /* Ring/focus */
-    --ring: 214 89% 58%;
-    
-    /* Sidebar in dark mode */
-    --sidebar-background: 220 71% 2%;
-    --sidebar-foreground: 213 27% 84%;
-    --sidebar-border: 215 28% 12%;
-    --sidebar-primary: 214 89% 58%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 28% 12%;
-    --sidebar-accent-foreground: 213 27% 84%;
-    --sidebar-ring: 214 89% 58%;
-  }
+  /* Enhanced secondary system */
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 220 9% 46%;
+  --secondary-hover: 220 14% 93%;
+  --secondary-active: 220 14% 89%;
+
+  /* Refined accent system */
+  --accent: 221 83% 95%;
+  --accent-foreground: 221 39% 11%;
+  --accent-hover: 221 83% 92%;
+  --accent-active: 221 83% 89%;
+
+  /* Sophisticated muted system */
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 9% 46%;
+  --muted-subtle: 220 14% 98%;
+
+  /* Enhanced border system */
+  --border: 220 13% 91%;
+  --border-subtle: 220 13% 94%;
+  --input: 220 13% 91%;
+  --input-border: 220 13% 85%;
+  --input-focus: 221 83% 53%;
+  --ring: 221 83% 53%;
+
+  /* Status colors */
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --success: 142 71% 45%;
+  --success-foreground: 0 0% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 26 83% 14%;
+
+  /* Advanced text hierarchy */
+  --text-primary: 222 84% 4.9%;
+  --text-secondary: 215 16% 47%;
+  --text-tertiary: 216 12% 64%;
+  --text-quaternary: 218 11% 76%;
+  --text-subtle: 220 9% 89%;
+
+  /* Glass sidebar system */
+  --sidebar-background: 220 20% 98%;
+  --sidebar-foreground: 220 9% 46%;
+  --sidebar-primary: 221 83% 53%;
+  --sidebar-primary-foreground: 210 40% 98%;
+  --sidebar-accent: 221 83% 95%;
+  --sidebar-accent-foreground: 221 39% 11%;
+  --sidebar-border: 220 13% 91%;
+  --sidebar-ring: 221 83% 53%;
+
+  /* Design system variables */
+  --radius: 0.875rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  
+  /* Glass effect variables */
+  --glass-opacity: 0.8;
+  --glass-blur: 20px;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.dark {
+  /* Dark base with sophisticated depth */
+  --background: 222 47% 4%;
+  --background-elevated: 222 47% 6%;
+  --background-glass: 222 47% 8%;
+  --foreground: 213 31% 91%;
+  
+  /* Glass morphism dark cards */
+  --card: 222 47% 6%;
+  --card-foreground: 213 31% 91%;
+  --card-elevated: 222 47% 8%;
+  --card-glass: 222 47% 10%;
+  --card-border: 215 25% 15%;
+  
+  /* Dark popover system */
+  --popover: 222 47% 6%;
+  --popover-foreground: 213 31% 91%;
+
+  /* Vibrant primary in dark - enhanced luminosity */
+  --primary: 213 93% 68%;
+  --primary-foreground: 222 47% 4%;
+  --primary-hover: 213 93% 73%;
+  --primary-active: 213 93% 63%;
+  --primary-subtle: 213 93% 15%;
+  --primary-glow: 213 93% 85%;
+
+  /* Dark secondary system */
+  --secondary: 215 25% 15%;
+  --secondary-foreground: 213 31% 91%;
+  --secondary-hover: 215 25% 18%;
+  --secondary-active: 215 25% 21%;
+
+  /* Dark accent system */
+  --accent: 213 93% 15%;
+  --accent-foreground: 213 93% 85%;
+  --accent-hover: 213 93% 18%;
+  --accent-active: 213 93% 21%;
+
+  /* Dark muted system */
+  --muted: 215 25% 15%;
+  --muted-foreground: 217 10% 64%;
+  --muted-subtle: 215 25% 12%;
+
+  /* Dark border system */
+  --border: 215 25% 15%;
+  --border-subtle: 215 25% 12%;
+  --input: 215 25% 15%;
+  --input-border: 215 25% 18%;
+  --input-focus: 213 93% 68%;
+  --ring: 213 93% 68%;
+
+  /* Dark status colors */
+  --destructive: 0 91% 71%;
+  --destructive-foreground: 222 47% 4%;
+  --success: 142 69% 58%;
+  --success-foreground: 222 47% 4%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 26 83% 14%;
+
+  /* Enhanced dark text hierarchy */
+  --text-primary: 213 31% 91%;
+  --text-secondary: 217 10% 64%;
+  --text-tertiary: 217 9% 48%;
+  --text-quaternary: 217 9% 32%;
+  --text-subtle: 217 9% 20%;
+
+  /* Glass dark sidebar */
+  --sidebar-background: 222 47% 6%;
+  --sidebar-foreground: 217 10% 64%;
+  --sidebar-primary: 213 93% 68%;
+  --sidebar-primary-foreground: 222 47% 4%;
+  --sidebar-accent: 213 93% 15%;
+  --sidebar-accent-foreground: 213 93% 85%;
+  --sidebar-border: 215 25% 15%;
+  --sidebar-ring: 213 93% 68%;
+
+  /* Dark glass effect variables */
+  --glass-opacity: 0.05;
+  --glass-blur: 24px;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 @layer base {
@@ -161,127 +179,186 @@ Professional, executive-grade interface following Apple's design principles:
   }
   
   body {
-    @apply bg-background text-foreground;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-variation-settings: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 }
 
-/* Apple HIG Typography System */
-.text-title-1 {
-  font-size: 2.125rem;
-  line-height: 1.19;
-  font-weight: 700;
-  letter-spacing: -0.022em;
-  color: hsl(var(--text-primary));
+/* Advanced typography scale inspired by Apple's system */
+.text-largetitle { 
+  font-size: 2.25rem; 
+  line-height: 2.75rem; 
+  font-weight: 800; 
+  letter-spacing: -0.04em; 
+  font-feature-settings: 'liga' 1, 'kern' 1; 
+}
+.text-title-1 { 
+  font-size: 1.875rem; 
+  line-height: 2.25rem; 
+  font-weight: 700; 
+  letter-spacing: -0.03em; 
+  font-feature-settings: 'liga' 1, 'kern' 1; 
+}
+.text-title-2 { 
+  font-size: 1.5rem; 
+  line-height: 2rem; 
+  font-weight: 600; 
+  letter-spacing: -0.025em; 
+  font-feature-settings: 'liga' 1, 'kern' 1; 
+}
+.text-title-3 { 
+  font-size: 1.25rem; 
+  line-height: 1.75rem; 
+  font-weight: 600; 
+  letter-spacing: -0.02em; 
+}
+.text-headline { 
+  font-size: 1.0625rem; 
+  line-height: 1.5rem; 
+  font-weight: 600; 
+  letter-spacing: -0.015em; 
+}
+.text-body { 
+  font-size: 1rem; 
+  line-height: 1.625rem; 
+  font-weight: 400; 
+  letter-spacing: -0.005em; 
+}
+.text-callout { 
+  font-size: 0.9375rem; 
+  line-height: 1.5rem; 
+  font-weight: 400; 
+  letter-spacing: -0.005em; 
+}
+.text-caption-1 { 
+  font-size: 0.875rem; 
+  line-height: 1.25rem; 
+  font-weight: 400; 
+  letter-spacing: 0; 
+}
+.text-caption-2 { 
+  font-size: 0.8125rem; 
+  line-height: 1.125rem; 
+  font-weight: 400; 
+  letter-spacing: 0.005em; 
+}
+.text-footnote { 
+  font-size: 0.75rem; 
+  line-height: 1rem; 
+  font-weight: 400; 
+  letter-spacing: 0.01em; 
 }
 
-.text-title-2 {
-  font-size: 1.75rem;
-  line-height: 1.25;
-  font-weight: 700;
-  letter-spacing: -0.017em;
-  color: hsl(var(--text-primary));
+/* Sophisticated glass morphism effects */
+.glass-card {
+  background: hsl(var(--card-glass) / var(--glass-opacity));
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
 }
 
-.text-title-3 {
-  font-size: 1.375rem;
-  line-height: 1.27;
-  font-weight: 600;
-  letter-spacing: -0.012em;
-  color: hsl(var(--text-primary));
+.glass-subtle {
+  background: hsl(var(--background-glass) / 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid hsl(var(--border) / 0.1);
 }
 
-.text-headline {
-  font-size: 1.0625rem;
-  line-height: 1.33;
-  font-weight: 600;
-  letter-spacing: -0.003em;
-  color: hsl(var(--text-primary));
+/* Advanced shadow system with proper depth layers */
+.shadow-subtle { 
+  box-shadow: 
+    0 1px 2px -1px rgba(0, 0, 0, 0.04),
+    0 1px 3px -1px rgba(0, 0, 0, 0.06); 
+}
+.shadow-soft { 
+  box-shadow: 
+    0 2px 4px -2px rgba(0, 0, 0, 0.06),
+    0 4px 8px -2px rgba(0, 0, 0, 0.08); 
+}
+.shadow-medium { 
+  box-shadow: 
+    0 4px 6px -2px rgba(0, 0, 0, 0.08),
+    0 8px 16px -4px rgba(0, 0, 0, 0.12); 
+}
+.shadow-strong { 
+  box-shadow: 
+    0 8px 12px -4px rgba(0, 0, 0, 0.12),
+    0 16px 32px -8px rgba(0, 0, 0, 0.16); 
+}
+.shadow-glow { 
+  box-shadow: 
+    0 0 0 1px hsl(var(--primary) / 0.1),
+    0 4px 12px -2px hsl(var(--primary) / 0.25),
+    0 8px 24px -4px hsl(var(--primary) / 0.15); 
 }
 
-.text-body {
-  font-size: 1rem;
-  line-height: 1.47;
-  font-weight: 400;
-  color: hsl(var(--text-primary));
+/* Enhanced interactive states */
+.hover-lift {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-.text-callout {
-  font-size: 0.9375rem;
-  line-height: 1.33;
-  font-weight: 400;
-  color: hsl(var(--text-secondary));
-}
-
-.text-caption-1 {
-  font-size: 0.75rem;
-  line-height: 1.33;
-  font-weight: 400;
-  color: hsl(var(--text-tertiary));
-}
-
-.text-caption-2 {
-  font-size: 0.6875rem;
-  line-height: 1.27;
-  font-weight: 400;
-  color: hsl(var(--text-tertiary));
-}
-
-/* Enhanced Button Styles */
-.btn-primary {
-  background: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
-  border-radius: calc(var(--radius) - 2px);
-  font-weight: 500;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-primary:hover {
-  background: hsl(var(--primary-hover));
+.hover-lift:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px -2px hsl(var(--primary) / 0.25);
+  box-shadow: 
+    0 8px 12px -4px rgba(0, 0, 0, 0.12),
+    0 16px 32px -8px rgba(0, 0, 0, 0.16);
 }
 
-.btn-primary:active {
-  background: hsl(var(--primary-active));
-  transform: translateY(0);
+/* Sophisticated transitions */
+.transition-smooth { 
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+.transition-spring { 
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); 
+}
+.transition-bounce { 
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
 }
 
-/* Enhanced Cards with Apple-like elevation */
-.card-enhanced {
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius);
-  box-shadow: 0 2px 8px -2px hsl(var(--foreground) / 0.08);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Modern grid system */
+.grid-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
-.card-enhanced:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px -5px hsl(var(--foreground) / 0.15);
+/* Status indicators */
+.status-indicator {
+  position: relative;
+}
+.status-indicator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid hsl(var(--background));
+}
+.status-online::before { background: hsl(var(--success)); }
+.status-busy::before { background: hsl(var(--warning)); }
+.status-offline::before { background: hsl(var(--muted-foreground)); }
+
+/* Enhanced focus states */
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 }
 
-/* Improved Sidebar Styles */
-.sidebar-item-active {
-  background: hsl(var(--sidebar-primary));
-  color: hsl(var(--sidebar-primary-foreground));
-  box-shadow: 0 2px 8px -2px hsl(var(--sidebar-primary) / 0.3);
+/* Professional gradients */
+.gradient-primary {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
 }
 
-.sidebar-item-inactive {
-  color: hsl(var(--sidebar-foreground));
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+.gradient-subtle {
+  background: linear-gradient(135deg, hsl(var(--background-elevated)), hsl(var(--background-glass)));
 }
 
-.sidebar-item-inactive:hover {
-  background: hsl(var(--sidebar-accent));
-  color: hsl(var(--sidebar-accent-foreground));
-}
-
-/* Apple-style Animations */
+/* Apple-style animations */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -327,7 +404,29 @@ Professional, executive-grade interface following Apple's design principles:
   animation: slide-up 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Focus States */
-.focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+/* Advanced layout utilities */
+.layout-dashboard {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  min-height: 100vh;
+}
+
+.layout-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: hsl(var(--background));
+}
+
+.layout-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .layout-main {
+    padding: 1rem;
+  }
 }
