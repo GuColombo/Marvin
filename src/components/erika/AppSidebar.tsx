@@ -9,8 +9,7 @@ import {
   Info,
   FileSearch,
   Download,
-  Upload,
-  BarChart3
+  Upload
 } from "lucide-react";
 import {
   Sidebar,
@@ -31,7 +30,6 @@ interface AppSidebarProps {
 }
 
 const modules = [
-  { id: 'dashboard', name: 'Dashboard', icon: BarChart3, description: 'System overview & analytics' },
   { id: 'inbox', name: 'Inbox', icon: Inbox, description: 'File ingestion & processing' },
   { id: 'memory', name: 'Memory', icon: Database, description: 'All indexed files & topics' },
   { id: 'digest', name: 'Digest View', icon: FileText, description: 'Summaries & insights' },
