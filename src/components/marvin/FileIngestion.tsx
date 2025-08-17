@@ -4,11 +4,11 @@ import { Upload, File, CheckCircle, AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { useErika, ProcessedFile } from '@/contexts/ErikaContext';
+import { useMarvin, ProcessedFile } from '@/contexts/MarvinContext';
 import { useToast } from '@/hooks/use-toast';
 
 export function FileIngestion() {
-  const { state, dispatch } = useErika();
+  const { state, dispatch } = useMarvin();
   const { toast } = useToast();
   const [processingFiles, setProcessingFiles] = useState<string[]>([]);
 

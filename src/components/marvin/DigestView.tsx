@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { useErika } from '@/contexts/ErikaContext';
+import { useMarvin } from '@/contexts/MarvinContext';
 
 export function DigestView() {
-  const { state } = useErika();
+  const { state } = useMarvin();
   const { files } = state;
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
 

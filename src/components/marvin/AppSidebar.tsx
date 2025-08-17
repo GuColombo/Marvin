@@ -22,7 +22,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
-import { useErika } from "@/contexts/ErikaContext";
+import { useMarvin } from "@/contexts/MarvinContext";
 
 interface AppSidebarProps {
   activeModule: string;
@@ -39,7 +39,7 @@ const modules = [
 ];
 
 export function AppSidebar({ activeModule, setActiveModule }: AppSidebarProps) {
-  const { state } = useErika();
+  const { state } = useMarvin();
   const { files } = state;
   
   const processingCount = files.filter(f => f.status === 'processing').length;

@@ -1,23 +1,23 @@
 import { useState } from 'react';
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/erika/AppSidebar";
-import { TopBar } from "@/components/erika/TopBar";
-import { LoginPage } from "@/components/erika/LoginPage";
-import { Inbox } from "@/components/erika/Inbox";
-import { MemoryViewer } from "@/components/erika/MemoryViewer";
-import { DigestView } from "@/components/erika/DigestView";
-import { QueryInterface } from "@/components/erika/QueryInterface";
-import { ConsultantMode } from "@/components/erika/ConsultantMode";
-import { BehaviorConfiguration } from "@/components/erika/BehaviorConfiguration";
-import { SystemLogs } from "@/components/erika/SystemLogs";
-import { AboutErika } from "@/components/erika/AboutErika";
-import { Settings } from "@/components/erika/Settings";
-import { FileInspector } from "@/components/erika/FileInspector";
-import { ExportImport } from "@/components/erika/ExportImport";
-import { ProfileSettings } from "@/components/erika/ProfileSettings";
-import { VersionHistory } from "@/components/erika/VersionHistory";
-import { WhatsNew } from "@/components/erika/WhatsNew";
-import { ErikaProvider } from "@/contexts/ErikaContext";
+import { AppSidebar } from "@/components/marvin/AppSidebar";
+import { TopBar } from "@/components/marvin/TopBar";
+import { LoginPage } from "@/components/marvin/LoginPage";
+import { Inbox } from "@/components/marvin/Inbox";
+import { MemoryViewer } from "@/components/marvin/MemoryViewer";
+import { DigestView } from "@/components/marvin/DigestView";
+import { QueryInterface } from "@/components/marvin/QueryInterface";
+import { ConsultantMode } from "@/components/marvin/ConsultantMode";
+import { BehaviorConfiguration } from "@/components/marvin/BehaviorConfiguration";
+import { SystemLogs } from "@/components/marvin/SystemLogs";
+import { AboutMarvin } from "@/components/marvin/AboutMarvin";
+import { Settings } from "@/components/marvin/Settings";
+import { FileInspector } from "@/components/marvin/FileInspector";
+import { ExportImport } from "@/components/marvin/ExportImport";
+import { ProfileSettings } from "@/components/marvin/ProfileSettings";
+import { VersionHistory } from "@/components/marvin/VersionHistory";
+import { WhatsNew } from "@/components/marvin/WhatsNew";
+import { MarvinProvider } from "@/contexts/MarvinContext";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
@@ -62,7 +62,7 @@ const Index = () => {
       case 'settings':
         return <Settings />;
       case 'about':
-        return <AboutErika />;
+        return <AboutMarvin />;
       case 'profile':
         return <ProfileSettings />;
       case 'version-history':
@@ -77,7 +77,7 @@ const Index = () => {
   };
 
   return (
-    <ErikaProvider>
+    <MarvinProvider>
       <SidebarProvider>
         <div className="min-h-screen flex w-full bg-background">
           <AppSidebar activeModule={activeModule} setActiveModule={setActiveModule} />
@@ -91,7 +91,7 @@ const Index = () => {
           </div>
         </div>
       </SidebarProvider>
-    </ErikaProvider>
+    </MarvinProvider>
   );
 };
 

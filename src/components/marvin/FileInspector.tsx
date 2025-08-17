@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useErika } from '@/contexts/ErikaContext';
+import { useMarvin } from '@/contexts/MarvinContext';
 
 export function FileInspector() {
-  const { state } = useErika();
+  const { state } = useMarvin();
   const { files } = state;
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
 

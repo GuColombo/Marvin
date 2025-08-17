@@ -5,11 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { useErika, BehaviorRule } from '@/contexts/ErikaContext';
+import { useMarvin, BehaviorRule } from '@/contexts/MarvinContext';
 import { useToast } from '@/hooks/use-toast';
 
 export function BehaviorConfiguration() {
-  const { state, dispatch } = useErika();
+  const { state, dispatch } = useMarvin();
   const { toast } = useToast();
   const [editingRule, setEditingRule] = useState<string | null>(null);
   const [newRule, setNewRule] = useState({ name: '', condition: '', action: '' });

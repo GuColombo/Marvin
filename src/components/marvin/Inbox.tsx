@@ -4,10 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useDropzone } from 'react-dropzone';
-import { useErika } from '@/contexts/ErikaContext';
+import { useMarvin } from '@/contexts/MarvinContext';
 
 export function Inbox() {
-  const { state, dispatch } = useErika();
+  const { state, dispatch } = useMarvin();
   const { files } = state;
 
   const onDrop = useCallback((acceptedFiles: File[]) => {

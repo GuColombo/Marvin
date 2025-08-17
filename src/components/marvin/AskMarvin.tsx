@@ -5,24 +5,24 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useErika } from '@/contexts/ErikaContext';
+import { useMarvin } from '@/contexts/MarvinContext';
 
 interface Message {
   id: string;
-  type: 'user' | 'erika';
+  type: 'user' | 'marvin';
   content: string;
   timestamp: Date;
   context?: string[];
 }
 
-export function AskErika() {
-  const { state } = useErika();
+export function AskMarvin() {
+  const { state } = useMarvin();
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      type: 'erika',
-      content: 'I am Erika, your strategic analysis system. I can help you analyze your processed documents, identify patterns, and provide executive-level insights. What would you like to know?',
+      type: 'marvin',
+      content: 'I am Marvin, your strategic analysis system. I can help you analyze your processed documents, identify patterns, and provide executive-level insights. What would you like to know?',
       timestamp: new Date(),
     }
   ]);
@@ -94,15 +94,15 @@ export function AskErika() {
 
     const { content, context } = generateResponse(input);
 
-    const erikaMessage: Message = {
+    const marvinMessage: Message = {
       id: (Date.now() + 1).toString(),
-      type: 'erika',
+      type: 'marvin',
       content,
       timestamp: new Date(),
       context,
     };
 
-    setMessages(prev => [...prev, erikaMessage]);
+    setMessages(prev => [...prev, marvinMessage]);
     setIsTyping(false);
   };
 
@@ -116,8 +116,8 @@ export function AskErika() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Ask Erika</h1>
-        <p className="text-muted-foreground">Interact with Erika's strategic analysis capabilities</p>
+        <h1 className="text-3xl font-bold">Ask Marvin</h1>
+        <p className="text-muted-foreground">Interact with Marvin's strategic analysis capabilities</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -128,7 +128,7 @@ export function AskErika() {
               Strategic Analysis Interface
             </CardTitle>
             <CardDescription>
-              Erika processes your queries using executive-level analytical frameworks
+              Marvin processes your queries using executive-level analytical frameworks
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -184,7 +184,7 @@ export function AskErika() {
 
               <div className="flex gap-2">
                 <Textarea
-                  placeholder="Ask Erika for strategic analysis, risk assessment, or operational insights..."
+                  placeholder="Ask Marvin for strategic analysis, risk assessment, or operational insights..."
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => {

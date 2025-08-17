@@ -2,7 +2,7 @@ import { Brain, Cpu, Database, Shield, Zap, Code } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-export function AboutErika() {
+export function AboutMarvin() {
   const capabilities = [
     {
       icon: Database,

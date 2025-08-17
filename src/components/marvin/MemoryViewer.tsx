@@ -6,11 +6,11 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useErika } from '@/contexts/ErikaContext';
+import { useMarvin } from '@/contexts/MarvinContext';
 import { useToast } from '@/hooks/use-toast';
 
 export function MemoryViewer() {
-  const { state, dispatch } = useErika();
+  const { state, dispatch } = useMarvin();
   const { toast } = useToast();
   const [sortBy, setSortBy] = useState<string>('newest');
   const [filterTopic, setFilterTopic] = useState<string>('all');

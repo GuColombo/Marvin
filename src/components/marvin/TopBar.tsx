@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
-import { useErika } from '@/contexts/ErikaContext';
+import { useMarvin } from '@/contexts/MarvinContext';
 import { useAuth } from '@/contexts/AuthContext';
 
 interface TopBarProps {
@@ -21,7 +21,7 @@ interface TopBarProps {
 }
 
 export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
-  const { state } = useErika();
+  const { state } = useMarvin();
   const { user, logout } = useAuth();
   const { files } = state;
   
@@ -54,7 +54,7 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
       <div className="flex items-center gap-4">
         <SidebarTrigger className="mr-2" />
         
-        {/* About Erika */}
+        {/* About Marvin */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm">
@@ -62,14 +62,14 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-80 bg-background border shadow-lg z-50">
-            <DropdownMenuLabel>About Erika</DropdownMenuLabel>
+            <DropdownMenuLabel>About Marvin</DropdownMenuLabel>
             <div className="p-3 border-b">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                   <Brain className="h-4 w-4 text-primary-foreground" />
                 </div>
                 <div>
-                  <h3 className="text-callout font-semibold">ERIKA</h3>
+                  <h3 className="text-callout font-semibold">MARVIN</h3>
                   <p className="text-caption-2 text-muted-foreground">Executive Intelligence v2.1.0</p>
                 </div>
               </div>
@@ -98,7 +98,7 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
           </div>
           <div className="flex items-center gap-4">
             <div>
-              <h1 className="text-headline font-semibold">ERIKA</h1>
+              <h1 className="text-headline font-semibold">MARVIN</h1>
               <p className="text-caption-2 text-muted-foreground">Executive Intelligence</p>
             </div>
           </div>

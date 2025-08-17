@@ -26,13 +26,13 @@ export interface BehaviorRule {
   enabled: boolean;
 }
 
-interface ErikaState {
+interface MarvinState {
   files: ProcessedFile[];
   topics: Topic[];
   behaviorRules: BehaviorRule[];
 }
 
-type ErikaAction =
+type MarvinAction =
   | { type: 'ADD_FILE'; payload: ProcessedFile }
   | { type: 'UPDATE_FILE'; payload: { id: string; updates: Partial<ProcessedFile> } }
   | { type: 'ADD_TOPIC'; payload: Topic }
@@ -41,9 +41,9 @@ type ErikaAction =
   | { type: 'ADD_BEHAVIOR_RULE'; payload: BehaviorRule }
   | { type: 'UPDATE_BEHAVIOR_RULE'; payload: { id: string; updates: Partial<BehaviorRule> } }
   | { type: 'DELETE_BEHAVIOR_RULE'; payload: string }
-  | { type: 'LOAD_STATE'; payload: ErikaState };
+  | { type: 'LOAD_STATE'; payload: MarvinState };
 
-const initialState: ErikaState = {
+const initialState: MarvinState = {
   files: [],
   topics: [
     { id: '1', name: 'Strategy', keywords: ['strategic', 'plan', 'vision', 'goals'], color: '#3b82f6' },
@@ -58,7 +58,7 @@ const initialState: ErikaState = {
   ]
 };
 
-function erikaReducer(state: ErikaState, action: ErikaAction): ErikaState {
+function marvinReducer(state: MarvinState, action: MarvinAction): MarvinState {
   switch (action.type) {
     case 'ADD_FILE':
       return { ...state, files: [...state.files, action.payload] };
@@ -98,25 +98,25 @@ function erikaReducer(state: ErikaState, action: ErikaAction): ErikaState {
   }
 }
 
-const ErikaContext = createContext<{
-  state: ErikaState;
-  dispatch: React.Dispatch<ErikaAction>;
+const MarvinContext = createContext<{
+  state: MarvinState;
+  dispatch: React.Dispatch<MarvinAction>;
 } | null>(null);
 
-export function ErikaProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(erikaReducer, initialState);
+export function MarvinProvider({ children }: { children: ReactNode }) {
+  const [state, dispatch] = useReducer(marvinReducer, initialState);
 
   return (
-    <ErikaContext.Provider value={{ state, dispatch }}>
+    <MarvinContext.Provider value={{ state, dispatch }}>
       {children}
-    </ErikaContext.Provider>
+    </MarvinContext.Provider>
   );
 }
 
-export function useErika() {
-  const context = useContext(ErikaContext);
+export function useMarvin() {
+  const context = useContext(MarvinContext);
   if (!context) {
-    throw new Error('useErika must be used within an ErikaProvider');
+    throw new Error('useMarvin must be used within a MarvinProvider');
   }
   return context;
 }

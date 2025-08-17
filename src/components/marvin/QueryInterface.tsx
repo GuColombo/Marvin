@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useErika } from '@/contexts/ErikaContext';
+import { useMarvin } from '@/contexts/MarvinContext';
 
 export function QueryInterface() {
-  const { state } = useErika();
+  const { state } = useMarvin();
   const [query, setQuery] = useState('');
   const [selectedTopic, setSelectedTopic] = useState<string>('all');
   const [dateFilter, setDateFilter] = useState<string>('all');

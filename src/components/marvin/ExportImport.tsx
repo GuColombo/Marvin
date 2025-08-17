@@ -7,10 +7,10 @@ import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { useErika } from '@/contexts/ErikaContext';
+import { useMarvin } from '@/contexts/MarvinContext';
 
 export function ExportImport() {
-  const { state } = useErika();
+  const { state } = useMarvin();
   const { files } = state;
   const [exportProgress, setExportProgress] = useState(0);
   const [isExporting, setIsExporting] = useState(false);
@@ -72,7 +72,7 @@ export function ExportImport() {
       <div>
         <h1 className="text-title-2 mb-2">Export & Import</h1>
         <p className="text-body text-muted-foreground">
-          Backup your data or migrate between Erika instances
+          Backup your data or migrate between Marvin instances
         </p>
       </div>
 
@@ -205,10 +205,10 @@ export function ExportImport() {
                 <div className="border-2 border-dashed border-border rounded-lg p-8 text-center">
                   <Upload className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-headline font-semibold mb-2">
-                    Drop Erika backup file here
+                    Drop Marvin backup file here
                   </h3>
                   <p className="text-body text-muted-foreground mb-4">
-                    Or click to browse for .erika backup files
+                    Or click to browse for .marvin backup files
                   </p>
                   <Button>Browse Files</Button>
                 </div>
