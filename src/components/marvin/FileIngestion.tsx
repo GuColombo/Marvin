@@ -81,7 +81,7 @@ export function FileIngestion() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">File Ingestion</h1>
-        <p className="text-muted-foreground">Upload and process files for Erika's analysis</p>
+        <p className="text-muted-foreground">Upload and process files for Marvin's analysis</p>
       </div>
 
       <Card>

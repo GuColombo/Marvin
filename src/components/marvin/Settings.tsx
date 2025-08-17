@@ -12,14 +12,14 @@ export function Settings() {
   const [autoProcessing, setAutoProcessing] = useState(true);
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
-  const [watchFolder, setWatchFolder] = useState('/Users/Documents/Erika-Watch');
+  const [watchFolder, setWatchFolder] = useState('/Users/Documents/Marvin-Watch');
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-title-2 mb-2">Settings</h1>
         <p className="text-body text-muted-foreground">
-          Configure Erika's behavior and system preferences
+          Configure Marvin's behavior and system preferences
         </p>
       </div>
 
@@ -133,7 +133,7 @@ export function Settings() {
               </SelectContent>
             </Select>
             <p className="text-caption-2 text-muted-foreground">
-              How often Erika suggests actions or insights without being asked
+              How often Marvin suggests actions or insights without being asked
             </p>
           </div>
         </CardContent>

@@ -8,7 +8,7 @@ import { useMarvin, Topic } from '@/contexts/MarvinContext';
 import { useToast } from '@/hooks/use-toast';
 
 export function TopicClassification() {
-  const { state, dispatch } = useErika();
+  const { state, dispatch } = useMarvin();
   const { toast } = useToast();
   const [editingTopic, setEditingTopic] = useState<string | null>(null);
   const [newTopic, setNewTopic] = useState({ name: '', keywords: '' });

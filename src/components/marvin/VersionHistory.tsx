@@ -100,7 +100,7 @@ export function VersionHistory() {
       <div>
         <h1 className="text-title-2 mb-2">Version History</h1>
         <p className="text-body text-muted-foreground">
-          Track the evolution of Erika with detailed release notes and feature updates
+          Track the evolution of Marvin with detailed release notes and feature updates
         </p>
       </div>
 

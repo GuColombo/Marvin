@@ -45,7 +45,7 @@ export function WhatsNew() {
     },
     {
       title: 'Mobile Application',
-      description: 'Access Erika on iOS and Android with full feature parity.',
+      description: 'Access Marvin on iOS and Android with full feature parity.',
       eta: 'Q3 2024',
       status: 'planned'
     },

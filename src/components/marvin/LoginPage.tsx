@@ -74,7 +74,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               <Brain className="h-6 w-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-title-2 font-bold">ERIKA</h1>
+              <h1 className="text-title-2 font-bold">MARVIN</h1>
               <p className="text-callout text-muted-foreground">Executive Intelligence</p>
             </div>
           </div>
@@ -112,7 +112,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                 <Brain className="h-5 w-5 text-primary-foreground" />
               </div>
               <div>
-                <h1 className="text-title-3 font-bold">ERIKA</h1>
+                <h1 className="text-title-3 font-bold">MARVIN</h1>
                 <p className="text-caption-1 text-muted-foreground">Executive Intelligence</p>
               </div>
             </div>

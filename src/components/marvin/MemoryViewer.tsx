@@ -47,7 +47,7 @@ export function MemoryViewer() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `erika-memory-${new Date().toISOString().split('T')[0]}.json`;
+    a.download = `marvin-memory-${new Date().toISOString().split('T')[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -55,7 +55,7 @@ export function MemoryViewer() {
 
     toast({
       title: "Memory exported",
-      description: "Erika's memory has been exported successfully.",
+      description: "Marvin's memory has been exported successfully.",
     });
   };
 

@@ -90,13 +90,13 @@ export function BehaviorConfiguration() {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Behavior Configuration</h1>
-        <p className="text-muted-foreground">Define rules that govern Erika's output formatting and behavior</p>
+        <p className="text-muted-foreground">Define rules that govern Marvin's output formatting and behavior</p>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle>Add New Rule</CardTitle>
-          <CardDescription>Create a new behavior rule to control Erika's responses</CardDescription>
+          <CardDescription>Create a new behavior rule to control Marvin's responses</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
