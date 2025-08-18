@@ -12,7 +12,8 @@ import {
   SearchParams, 
   SearchResult, 
   ChatDelta,
-  DataMode 
+  DataMode,
+  SystemConfig 
 } from './types';
 import { 
   mockHealth, 
@@ -24,7 +25,8 @@ import {
   mockEmailDetails, 
   mockKBItems, 
   mockKBDetails, 
-  mockChatThreads 
+  mockChatThreads,
+  mockSystemConfig 
 } from './mockData';
 
 const BASE_API = 'http://127.0.0.1:8112';
@@ -161,6 +163,17 @@ class LiveProvider {
       reader.releaseLock();
     }
   }
+
+  async getSystemConfig(): Promise<SystemConfig> {
+    return this.request<SystemConfig>('/settings/config');
+  }
+
+  async updateSystemConfig(config: SystemConfig): Promise<void> {
+    await this.request('/settings/config', {
+      method: 'PUT',
+      body: JSON.stringify(config),
+    });
+  }
 }
 
 // Mock Provider - returns realistic demo data
@@ -283,6 +296,17 @@ class MockProvider {
     }
 
     yield { type: 'done' } as ChatDelta;
+  }
+
+  async getSystemConfig(): Promise<SystemConfig> {
+    await this.delay(150);
+    return mockSystemConfig;
+  }
+
+  async updateSystemConfig(config: SystemConfig): Promise<void> {
+    await this.delay(200);
+    // In a real implementation, this would save the config
+    console.log('Saving system config:', config);
   }
 
   private delay(ms: number): Promise<void> {
@@ -418,6 +442,20 @@ class APIAdapter {
       console.warn('Live chat failed, falling back to mock:', error);
       yield* this.mockProvider.sendChatMessage(threadId, message, attachments);
     }
+  }
+
+  async getSystemConfig(): Promise<SystemConfig> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.getSystemConfig(),
+      () => this.mockProvider.getSystemConfig()
+    );
+  }
+
+  async updateSystemConfig(config: SystemConfig): Promise<void> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.updateSystemConfig(config),
+      () => this.mockProvider.updateSystemConfig(config)
+    );
   }
 }
 

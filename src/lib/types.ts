@@ -201,3 +201,72 @@ export interface ChatDelta {
 }
 
 export type DataMode = 'mock' | 'live';
+
+// Enhanced Settings Configuration Types
+
+export interface WatchPath {
+  id: string;
+  path: string;
+  type: 'files' | 'meetings';
+  enabled: boolean;
+  autoProcess: boolean;
+  supportedFormats: string[];
+  lastScanned?: Date;
+  status: 'active' | 'error' | 'inactive';
+  errorMessage?: string;
+}
+
+export interface EmailConfig {
+  provider: 'outlook' | 'gmail' | 'custom';
+  enabled: boolean;
+  connectionStatus: 'connected' | 'disconnected' | 'error';
+  lastSync?: Date;
+  syncFrequency: number; // minutes
+  processingEnabled: boolean;
+  folders: string[];
+  errorMessage?: string;
+}
+
+export interface MeetingConfig {
+  autoTranscription: boolean;
+  supportedFormats: string[];
+  calendarSync: boolean;
+  calendarProvider?: 'outlook' | 'google' | 'custom';
+  processRecordings: boolean;
+  extractActions: boolean;
+}
+
+export interface NotificationConfig {
+  systemNotifications: boolean;
+  errorAlerts: boolean;
+  processingUpdates: boolean;
+  emailDigest: boolean;
+  digestFrequency: 'daily' | 'weekly' | 'monthly';
+}
+
+export interface PrivacyConfig {
+  dataRetention: number; // days
+  allowTelemetry: boolean;
+  encryptLocal: boolean;
+  autoBackup: boolean;
+  backupLocation?: string;
+}
+
+export interface AIBehaviorConfig {
+  responseStyle: 'concise' | 'balanced' | 'detailed';
+  analysisDepth: 'surface' | 'strategic' | 'comprehensive';
+  proactivityLevel: 'reactive' | 'moderate' | 'proactive';
+  confidenceThreshold: number;
+  suggestionsEnabled: boolean;
+}
+
+export interface SystemConfig {
+  watchPaths: WatchPath[];
+  emailConfig: EmailConfig;
+  meetingConfig: MeetingConfig;
+  notificationConfig: NotificationConfig;
+  privacyConfig: PrivacyConfig;
+  aiBehaviorConfig: AIBehaviorConfig;
+  lastUpdated: Date;
+  version: string;
+}

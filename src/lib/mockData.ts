@@ -8,7 +8,8 @@ import {
   KBItem, 
   KBItemDetail, 
   ChatThread,
-  HealthStatus 
+  HealthStatus,
+  SystemConfig 
 } from './types';
 
 // Mock Health Status
@@ -354,3 +355,76 @@ export const mockChatThreads: ChatThread[] = [
     isPinned: false
   }
 ];
+
+// Mock System Configuration
+export const mockSystemConfig: SystemConfig = {
+  watchPaths: [
+    {
+      id: 'path-1',
+      path: '/Users/Documents/Marvin-Watch',
+      type: 'files',
+      enabled: true,
+      autoProcess: true,
+      supportedFormats: ['pdf', 'docx', 'txt', 'md', 'xlsx', 'pptx'],
+      lastScanned: new Date('2024-01-16T12:00:00'),
+      status: 'active'
+    },
+    {
+      id: 'path-2', 
+      path: '/Users/Recordings/Meetings',
+      type: 'meetings',
+      enabled: true,
+      autoProcess: true,
+      supportedFormats: ['mp4', 'm4a', 'wav', 'webm'],
+      lastScanned: new Date('2024-01-16T11:30:00'),
+      status: 'active'
+    },
+    {
+      id: 'path-3',
+      path: '/Shared/Documents/Archive',
+      type: 'files',
+      enabled: false,
+      autoProcess: false,
+      supportedFormats: ['pdf', 'docx'],
+      status: 'inactive'
+    }
+  ],
+  emailConfig: {
+    provider: 'outlook',
+    enabled: false,
+    connectionStatus: 'disconnected',
+    syncFrequency: 15,
+    processingEnabled: true,
+    folders: ['Inbox', 'Sent', 'Important']
+  },
+  meetingConfig: {
+    autoTranscription: true,
+    supportedFormats: ['mp4', 'm4a', 'wav', 'webm', 'mov'],
+    calendarSync: false,
+    processRecordings: true,
+    extractActions: true
+  },
+  notificationConfig: {
+    systemNotifications: true,
+    errorAlerts: true,
+    processingUpdates: false,
+    emailDigest: true,
+    digestFrequency: 'weekly'
+  },
+  privacyConfig: {
+    dataRetention: 365,
+    allowTelemetry: false,
+    encryptLocal: true,
+    autoBackup: true,
+    backupLocation: '/Users/Documents/Marvin-Backups'
+  },
+  aiBehaviorConfig: {
+    responseStyle: 'balanced',
+    analysisDepth: 'strategic',
+    proactivityLevel: 'moderate',
+    confidenceThreshold: 0.8,
+    suggestionsEnabled: true
+  },
+  lastUpdated: new Date('2024-01-16T10:00:00'),
+  version: '0.5.0'
+};
