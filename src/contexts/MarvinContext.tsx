@@ -1,35 +1,22 @@
 import { createContext, useContext, useReducer, ReactNode } from 'react';
-
-export interface ProcessedFile {
-  id: string;
-  name: string;
-  content: string;
-  topics: string[];
-  timestamp: Date;
-  status: 'processed' | 'processing' | 'error';
-  type: string;
-  size: number;
-}
-
-export interface Topic {
-  id: string;
-  name: string;
-  keywords: string[];
-  color: string;
-}
-
-export interface BehaviorRule {
-  id: string;
-  name: string;
-  condition: string;
-  action: string;
-  enabled: boolean;
-}
+import { 
+  ProcessedFile, 
+  Topic, 
+  BehaviorRule, 
+  ChatThread, 
+  MeetingSummary, 
+  EmailSummary, 
+  DataMode 
+} from '@/lib/types';
 
 interface MarvinState {
   files: ProcessedFile[];
   topics: Topic[];
   behaviorRules: BehaviorRule[];
+  chatThreads: ChatThread[];
+  meetings: MeetingSummary[];
+  emails: EmailSummary[];
+  dataMode: DataMode;
 }
 
 type MarvinAction =
@@ -41,6 +28,12 @@ type MarvinAction =
   | { type: 'ADD_BEHAVIOR_RULE'; payload: BehaviorRule }
   | { type: 'UPDATE_BEHAVIOR_RULE'; payload: { id: string; updates: Partial<BehaviorRule> } }
   | { type: 'DELETE_BEHAVIOR_RULE'; payload: string }
+  | { type: 'SET_CHAT_THREADS'; payload: ChatThread[] }
+  | { type: 'ADD_CHAT_THREAD'; payload: ChatThread }
+  | { type: 'UPDATE_CHAT_THREAD'; payload: { id: string; updates: Partial<ChatThread> } }
+  | { type: 'SET_MEETINGS'; payload: MeetingSummary[] }
+  | { type: 'SET_EMAILS'; payload: EmailSummary[] }
+  | { type: 'SET_DATA_MODE'; payload: DataMode }
   | { type: 'LOAD_STATE'; payload: MarvinState };
 
 const initialState: MarvinState = {
@@ -55,7 +48,11 @@ const initialState: MarvinState = {
     { id: '1', name: 'Executive Tone', condition: 'all_outputs', action: 'use_executive_language', enabled: true },
     { id: '2', name: 'No Emojis', condition: 'all_outputs', action: 'remove_emojis', enabled: true },
     { id: '3', name: 'MECE Structure', condition: 'strategic_content', action: 'apply_mece_framework', enabled: true }
-  ]
+  ],
+  chatThreads: [],
+  meetings: [],
+  emails: [],
+  dataMode: 'mock'
 };
 
 function marvinReducer(state: MarvinState, action: MarvinAction): MarvinState {
@@ -91,6 +88,23 @@ function marvinReducer(state: MarvinState, action: MarvinAction): MarvinState {
       };
     case 'DELETE_BEHAVIOR_RULE':
       return { ...state, behaviorRules: state.behaviorRules.filter(rule => rule.id !== action.payload) };
+    case 'SET_CHAT_THREADS':
+      return { ...state, chatThreads: action.payload };
+    case 'ADD_CHAT_THREAD':
+      return { ...state, chatThreads: [...state.chatThreads, action.payload] };
+    case 'UPDATE_CHAT_THREAD':
+      return {
+        ...state,
+        chatThreads: state.chatThreads.map(thread =>
+          thread.id === action.payload.id ? { ...thread, ...action.payload.updates } : thread
+        )
+      };
+    case 'SET_MEETINGS':
+      return { ...state, meetings: action.payload };
+    case 'SET_EMAILS':
+      return { ...state, emails: action.payload };
+    case 'SET_DATA_MODE':
+      return { ...state, dataMode: action.payload };
     case 'LOAD_STATE':
       return action.payload;
     default:
