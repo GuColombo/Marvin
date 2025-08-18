@@ -1,5 +1,4 @@
 import { 
-  Inbox, 
   Database, 
   FileText, 
   Search, 

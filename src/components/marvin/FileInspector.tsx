@@ -93,7 +93,7 @@ export function FileInspector() {
                   <div className="text-center py-8 text-muted-foreground">
                     <FileText className="h-12 w-12 mx-auto mb-3 opacity-50" />
                     <p className="text-callout">No files processed yet</p>
-                    <p className="text-caption-2">Upload files through the Inbox</p>
+                    <p className="text-caption-2">Upload documents using the intake section above</p>
                   </div>
                 )}
               </div>
