@@ -9,7 +9,11 @@ import {
   Info,
   FileSearch,
   Download,
-  Upload
+  Upload,
+  MessageCircle,
+  CalendarDays,
+  Mail,
+  Brain
 } from "lucide-react";
 import {
   Sidebar,
@@ -23,24 +27,27 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { useMarvin } from "@/contexts/MarvinContext";
+import { useNavigate, useLocation } from "react-router-dom";
 
-interface AppSidebarProps {
-  activeModule: string;
-  setActiveModule: (module: string) => void;
-}
+interface AppSidebarProps {}
 
 const modules = [
-  { id: 'inbox', name: 'Inbox', icon: Inbox, description: 'File ingestion & processing' },
-  { id: 'memory', name: 'Memory', icon: Database, description: 'All indexed files & topics' },
-  { id: 'digest', name: 'Digest View', icon: FileText, description: 'Summaries & insights' },
-  { id: 'query', name: 'Query Terminal', icon: Search, description: 'Natural language queries' },
-  { id: 'mckinsey', name: 'Consultant Mode', icon: TrendingUp, description: 'Strategic frameworks' },
-  { id: 'inspector', name: 'File Inspector', icon: FileSearch, description: 'Detailed file analysis' },
+  { id: 'chat', name: 'Chat Mode', icon: MessageCircle, description: 'AI assistant with context', route: '/chat' },
+  { id: 'meetings', name: 'Meeting Analyst', icon: CalendarDays, description: 'Meeting analysis & insights', route: '/meetings' },
+  { id: 'files', name: 'File Analyst', icon: FileSearch, description: 'Document analysis & search', route: '/files' },
+  { id: 'emails', name: 'Email Analyst', icon: Mail, description: 'Email conversation analysis', route: '/emails' },
+  { id: 'kb', name: 'Knowledge Base', icon: Brain, description: 'Indexed knowledge & search', route: '/kb' },
+  { id: 'inbox', name: 'Inbox', icon: Inbox, description: 'File ingestion & processing', route: '/' },
+  { id: 'digest', name: 'Digest View', icon: FileText, description: 'Summaries & insights', route: '/digest' },
+  { id: 'query', name: 'Query Terminal', icon: Search, description: 'Natural language queries', route: '/query' },
+  { id: 'mckinsey', name: 'Consultant Mode', icon: TrendingUp, description: 'Strategic frameworks', route: '/consultant' },
 ];
 
-export function AppSidebar({ activeModule, setActiveModule }: AppSidebarProps) {
+export function AppSidebar({}: AppSidebarProps) {
   const { state } = useMarvin();
   const { files } = state;
+  const navigate = useNavigate();
+  const location = useLocation();
   
   const processingCount = files.filter(f => f.status === 'processing').length;
   const errorCount = files.filter(f => f.status === 'error').length;
@@ -57,12 +64,13 @@ export function AppSidebar({ activeModule, setActiveModule }: AppSidebarProps) {
             <SidebarMenu className="space-y-1">
               {modules.map((module) => {
                 const Icon = module.icon;
-                const isActive = activeModule === module.id;
+                const isActive = location.pathname === module.route || 
+                  (module.route !== '/' && location.pathname.startsWith(module.route));
                 
                 return (
                   <SidebarMenuItem key={module.id}>
                     <SidebarMenuButton 
-                      onClick={() => setActiveModule(module.id)}
+                      onClick={() => navigate(module.route)}
                       className={`w-full justify-start h-12 rounded-lg transition-all duration-200 ${
                         isActive 
                           ? 'sidebar-item-active shadow-sm' 

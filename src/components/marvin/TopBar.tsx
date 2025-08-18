@@ -1,4 +1,4 @@
-import { Bell, Settings, Brain, Sliders, Info, Activity, User, CheckCircle, AlertCircle, Clock, Loader } from 'lucide-react';
+import { Bell, Settings, Brain, Sliders, Info, Activity, User, CheckCircle, AlertCircle, Clock, Loader, Monitor, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -14,16 +14,17 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useMarvin } from '@/contexts/MarvinContext';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { getDataMode, setDataMode } from '@/lib/apiAdapter';
 
-interface TopBarProps {
-  activeModule: string;
-  setActiveModule: (module: string) => void;
-}
+interface TopBarProps {}
 
-export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
+export function TopBar({}: TopBarProps) {
   const { state } = useMarvin();
   const { user, logout } = useAuth();
   const { files } = state;
+  const navigate = useNavigate();
+  const currentMode = getDataMode();
   
   const processingCount = files.filter(f => f.status === 'processing').length;
   const errorCount = files.filter(f => f.status === 'error').length;
@@ -77,15 +78,15 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
                 Privacy-first AI assistant for document analysis and strategic insights.
               </p>
             </div>
-            <DropdownMenuItem onClick={() => setActiveModule('about')}>
+            <DropdownMenuItem onClick={() => navigate('/about')}>
               <Info className="mr-2 h-4 w-4" />
               Full Documentation
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setActiveModule('version-history')}>
+            <DropdownMenuItem onClick={() => navigate('/version-history')}>
               <CheckCircle className="mr-2 h-4 w-4" />
               Version History
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setActiveModule('whats-new')}>
+            <DropdownMenuItem onClick={() => navigate('/whats-new')}>
               <Activity className="mr-2 h-4 w-4" />
               What's New
             </DropdownMenuItem>
@@ -101,6 +102,34 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
               <h1 className="text-headline font-semibold">MARVIN</h1>
               <p className="text-caption-2 text-muted-foreground">Executive Intelligence</p>
             </div>
+            {/* Data Mode Switcher */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  {currentMode === 'live' ? <Monitor className="h-3 w-3" /> : <Smartphone className="h-3 w-3" />}
+                  {currentMode === 'live' ? 'Live' : 'Demo'}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-64">
+                <DropdownMenuLabel>Data Mode</DropdownMenuLabel>
+                <DropdownMenuItem onClick={() => {
+                  setDataMode('live');
+                  window.location.reload();
+                }}>
+                  <Monitor className="mr-2 h-4 w-4" />
+                  Live Mode
+                  <p className="text-xs text-muted-foreground ml-auto">Real API</p>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => {
+                  setDataMode('mock');
+                  window.location.reload();
+                }}>
+                  <Smartphone className="mr-2 h-4 w-4" />
+                  Demo Mode
+                  <p className="text-xs text-muted-foreground ml-auto">Mock Data</p>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </div>
@@ -191,11 +220,11 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-64 bg-background border shadow-lg z-50">
             <DropdownMenuLabel>Settings</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => setActiveModule('settings')}>
+            <DropdownMenuItem onClick={() => navigate('/settings')}>
               <Settings className="mr-2 h-4 w-4" />
               General Settings
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setActiveModule('behavior')}>
+            <DropdownMenuItem onClick={() => navigate('/behavior')}>
               <Sliders className="mr-2 h-4 w-4" />
               Behavior Console
             </DropdownMenuItem>
@@ -252,12 +281,12 @@ export function TopBar({ activeModule, setActiveModule }: TopBarProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-64 bg-background border shadow-lg z-50">
             <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => setActiveModule('profile')}>
+            <DropdownMenuItem onClick={() => navigate('/profile')}>
               <User className="mr-2 h-4 w-4" />
               Profile Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => setActiveModule('export')}>
+            <DropdownMenuItem onClick={() => navigate('/export')}>
               <Settings className="mr-2 h-4 w-4" />
               Data Export & Import
             </DropdownMenuItem>
