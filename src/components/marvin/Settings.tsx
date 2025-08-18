@@ -81,16 +81,16 @@ export function Settings() {
     }
   };
 
-  const addWatchPath = () => {
+  const addWatchPath = (type: 'files' | 'meetings' = 'files') => {
     if (!config) return;
     
     const newPath: WatchPath = {
       id: `path-${Date.now()}`,
       path: '',
-      type: 'files',
+      type,
       enabled: true,
       autoProcess: true,
-      supportedFormats: ['pdf', 'docx', 'txt', 'md'],
+      supportedFormats: type === 'files' ? ['pdf', 'docx', 'txt', 'md'] : ['mp4', 'm4a', 'wav', 'webm'],
       status: 'inactive'
     };
     
@@ -180,9 +180,9 @@ export function Settings() {
         </div>
       </div>
 
-      <Tabs defaultValue="processing" className="space-y-6">
+      <Tabs defaultValue="files" className="space-y-6">
         <TabsList className="grid w-full grid-cols-6">
-          <TabsTrigger value="processing">Processing</TabsTrigger>
+          <TabsTrigger value="files">Files</TabsTrigger>
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
           <TabsTrigger value="emails">Email</TabsTrigger>
           <TabsTrigger value="ai">AI Behavior</TabsTrigger>
@@ -190,31 +190,31 @@ export function Settings() {
           <TabsTrigger value="privacy">Privacy</TabsTrigger>
         </TabsList>
 
-        {/* File Processing Tab */}
-        <TabsContent value="processing" className="space-y-6">
+        {/* Files Tab */}
+        <TabsContent value="files" className="space-y-6">
           <Card>
             <CardHeader>
               <CardTitle className="text-headline flex items-center gap-2">
                 <Folder className="h-5 w-5" />
-                Watch Paths Configuration
+                File Watch Paths
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <Label className="text-callout font-medium">Watch Paths</Label>
+                  <Label className="text-callout font-medium">File Watch Paths</Label>
                   <p className="text-caption-2 text-muted-foreground">
-                    Folders monitored for new files and content
+                    Folders monitored for new files and documents
                   </p>
                 </div>
-                <Button onClick={addWatchPath} size="sm">
+                <Button onClick={() => addWatchPath('files')} size="sm">
                   <Plus className="h-4 w-4 mr-2" />
                   Add Path
                 </Button>
               </div>
 
               <div className="space-y-4">
-                {config.watchPaths.map((path) => (
+                {config.watchPaths.filter(path => path.type === 'files').map((path) => (
                   <Card key={path.id} className="p-4">
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
@@ -326,7 +326,134 @@ export function Settings() {
             <CardHeader>
               <CardTitle className="text-headline flex items-center gap-2">
                 <Video className="h-5 w-5" />
-                Meeting & Recording Configuration
+                Meeting Recording Paths
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-callout font-medium">Recording Watch Paths</Label>
+                  <p className="text-caption-2 text-muted-foreground">
+                    Folders monitored for meeting recordings and transcripts
+                  </p>
+                </div>
+                <Button onClick={() => addWatchPath('meetings')} size="sm">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Path
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                {config.watchPaths.filter(path => path.type === 'meetings').map((path) => (
+                  <Card key={path.id} className="p-4">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          {getStatusIcon(path.status)}
+                          <Badge variant="secondary">
+                            {path.type}
+                          </Badge>
+                          <span className="text-sm font-medium">{path.path || 'New Path'}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Switch
+                            checked={path.enabled}
+                            onCheckedChange={(enabled) => updateWatchPath(path.id, { enabled })}
+                          />
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeWatchPath(path.id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label>Recording Path</Label>
+                          <div className="flex gap-2">
+                            <Input
+                              value={path.path}
+                              onChange={(e) => updateWatchPath(path.id, { path: e.target.value })}
+                              placeholder="/path/to/recordings"
+                            />
+                            <Button variant="outline" size="sm">
+                              <FolderOpen className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label>Processing Mode</Label>
+                          <Select
+                            value={path.autoProcess ? 'auto' : 'manual'}
+                            onValueChange={(mode) => 
+                              updateWatchPath(path.id, { autoProcess: mode === 'auto' })
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="auto">Auto-process recordings</SelectItem>
+                              <SelectItem value="manual">Manual processing</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center space-x-2">
+                            <Switch
+                              checked={path.enabled}
+                              onCheckedChange={(enabled) => 
+                                updateWatchPath(path.id, { enabled })
+                              }
+                            />
+                            <Label>Monitor this path</Label>
+                          </div>
+                        </div>
+                        {path.lastScanned && (
+                          <span className="text-caption-2 text-muted-foreground">
+                            Last scanned: {path.lastScanned.toLocaleString()}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label>Supported Recording Formats</Label>
+                        <div className="flex flex-wrap gap-2">
+                          {path.supportedFormats.map((format) => (
+                            <span
+                              key={format}
+                              className="px-2 py-1 bg-muted rounded text-caption-2 font-medium"
+                            >
+                              {format.toUpperCase()}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {path.errorMessage && (
+                        <div className="p-2 bg-destructive/10 border border-destructive/20 rounded text-caption-2 text-destructive">
+                          {path.errorMessage}
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-headline flex items-center gap-2">
+                <Settings2 className="h-5 w-5" />
+                Meeting Processing Configuration
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
