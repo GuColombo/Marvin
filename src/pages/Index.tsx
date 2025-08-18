@@ -2,7 +2,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/marvin/AppSidebar";
 import { TopBar } from "@/components/marvin/TopBar";
 import { LoginPage } from "@/components/marvin/LoginPage";
-import { Inbox } from "@/components/marvin/Inbox";
+
 import { MemoryViewer } from "@/components/marvin/MemoryViewer";
 import { DigestView } from "@/components/marvin/DigestView";
 import { QueryInterface } from "@/components/marvin/QueryInterface";
@@ -98,8 +98,8 @@ const Index = () => {
       return <SystemLogs />;
     }
     
-    // Default to Inbox for root path
-    return <Inbox />;
+    // Default to Chat for root path
+    return <ChatInterface />;
   };
 
   return (

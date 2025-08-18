@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Mail, Users, Calendar, MessageSquare, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { ArrowLeft, Mail, Users, Calendar, MessageSquare, TrendingUp, TrendingDown, Minus, MailOpen } from 'lucide-react';
+import { IntakeSection } from './IntakeSection';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -313,8 +314,24 @@ export function EmailAnalyst() {
 
   return (
     <div className="space-y-6">
+      <div>
+        <h1 className="text-title-2 mb-2">Email Analyst</h1>
+        <p className="text-body text-muted-foreground">
+          Analyze email conversations, extract insights, and track communication patterns
+        </p>
+      </div>
+
+      {/* Intake Section */}
+      <IntakeSection
+        title="Add Email Content"
+        description="Upload email exports, mbox files, or conversation archives"
+        acceptedTypes={['.eml', '.msg', '.mbox', '.pst']}
+        icon={MailOpen}
+        contentType="email"
+      />
+
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Email Analyst</h1>
+        <h2 className="text-headline font-semibold">Emails</h2>
         <div className="w-64">
           <Input
             placeholder="Search emails..."

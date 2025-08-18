@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, Users, MessageSquare, CheckCircle, Download } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Users, MessageSquare, CheckCircle, Download, Video } from 'lucide-react';
+import { IntakeSection } from './IntakeSection';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -359,8 +360,24 @@ export function MeetingAnalyst() {
 
   return (
     <div className="space-y-6">
+      <div>
+        <h1 className="text-title-2 mb-2">Meeting Analyst</h1>
+        <p className="text-body text-muted-foreground">
+          Analyze meeting recordings, transcripts, and extract actionable insights
+        </p>
+      </div>
+
+      {/* Intake Section */}
+      <IntakeSection
+        title="Add Meeting Content"
+        description="Upload meeting recordings, transcripts, or calendar exports"
+        acceptedTypes={['.mp4', '.m4a', '.wav', '.mp3', '.vtt', '.srt', '.ics']}
+        icon={Video}
+        contentType="meeting"
+      />
+
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Meeting Analyst</h1>
+        <h2 className="text-headline font-semibold">Meetings</h2>
         <div className="w-64">
           <Input
             placeholder="Search meetings..."

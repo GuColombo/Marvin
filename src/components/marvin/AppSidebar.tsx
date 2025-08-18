@@ -37,7 +37,6 @@ const modules = [
   { id: 'files', name: 'File Analyst', icon: FileSearch, description: 'Document analysis & search', route: '/files' },
   { id: 'emails', name: 'Email Analyst', icon: Mail, description: 'Email conversation analysis', route: '/emails' },
   { id: 'kb', name: 'Knowledge Base', icon: Brain, description: 'Indexed knowledge & search', route: '/kb' },
-  { id: 'inbox', name: 'Inbox', icon: Inbox, description: 'File ingestion & processing', route: '/' },
   { id: 'digest', name: 'Digest View', icon: FileText, description: 'Summaries & insights', route: '/digest' },
   { id: 'query', name: 'Query Terminal', icon: Search, description: 'Natural language queries', route: '/query' },
   { id: 'mckinsey', name: 'Consultant Mode', icon: TrendingUp, description: 'Strategic frameworks', route: '/consultant' },
@@ -82,11 +81,6 @@ export function AppSidebar({}: AppSidebarProps) {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
                             <span className="text-callout font-medium truncate">{module.name}</span>
-                            {module.id === 'inbox' && processingCount > 0 && (
-                              <Badge variant="secondary" className="ml-2 h-5 text-xs">
-                                {processingCount}
-                              </Badge>
-                            )}
                           </div>
                           <p className="text-caption-2 text-muted-foreground truncate">{module.description}</p>
                         </div>

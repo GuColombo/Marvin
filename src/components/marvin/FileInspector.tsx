@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { FileText, Eye, Tag, Calendar, FileType, Hash, ChevronRight } from 'lucide-react';
+import { FileText, Eye, Tag, Calendar, FileType, Hash, ChevronRight, Upload } from 'lucide-react';
+import { IntakeSection } from './IntakeSection';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -36,11 +37,20 @@ export function FileInspector() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-title-2 mb-2">File Inspector</h1>
+        <h1 className="text-title-2 mb-2">File Analyst</h1>
         <p className="text-body text-muted-foreground">
-          Deep dive into individual file analysis and metadata
+          Analyze documents, extract insights, and search through your knowledge base
         </p>
       </div>
+
+      {/* Intake Section */}
+      <IntakeSection
+        title="Add Documents"
+        description="Upload documents, PDFs, text files, or presentations"
+        acceptedTypes={['.pdf', '.doc', '.docx', '.txt', '.md', '.ppt', '.pptx']}
+        icon={Upload}
+        contentType="document"
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* File List */}
