@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { useMarvin, Topic } from '@/contexts/MarvinContext';
+import { useMarvin } from '@/contexts/MarvinContext';
+import { Topic } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 
 export function TopicClassification() {

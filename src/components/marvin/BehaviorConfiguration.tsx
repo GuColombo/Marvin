@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { useMarvin, BehaviorRule } from '@/contexts/MarvinContext';
+import { useMarvin } from '@/contexts/MarvinContext';
+import { BehaviorRule } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 
 export function BehaviorConfiguration() {

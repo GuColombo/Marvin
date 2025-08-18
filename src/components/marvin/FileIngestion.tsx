@@ -4,7 +4,8 @@ import { Upload, File, CheckCircle, AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { useMarvin, ProcessedFile } from '@/contexts/MarvinContext';
+import { useMarvin } from '@/contexts/MarvinContext';
+import { ProcessedFile } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 
 export function FileIngestion() {
