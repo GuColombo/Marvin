@@ -31,14 +31,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 interface AppSidebarProps {}
 
 const modules = [
-  { id: 'chat', name: 'Chat Mode', icon: MessageCircle, description: 'AI assistant with context', route: '/chat' },
-  { id: 'meetings', name: 'Meeting Analyst', icon: CalendarDays, description: 'Meeting analysis & insights', route: '/meetings' },
-  { id: 'files', name: 'File Analyst', icon: FileSearch, description: 'Document analysis & search', route: '/files' },
-  { id: 'emails', name: 'Email Analyst', icon: Mail, description: 'Email conversation analysis', route: '/emails' },
-  { id: 'kb', name: 'Knowledge Base', icon: Brain, description: 'Indexed knowledge & search', route: '/kb' },
-  { id: 'digest', name: 'Digest View', icon: FileText, description: 'Summaries & insights', route: '/digest' },
-  { id: 'query', name: 'Query Terminal', icon: Search, description: 'Natural language queries', route: '/query' },
-  { id: 'mckinsey', name: 'Consultant Mode', icon: TrendingUp, description: 'Strategic frameworks', route: '/consultant' },
+  { id: 'chat', name: 'Chat', icon: MessageCircle, description: 'Ask Marvin questions', route: '/chat' },
+  { id: 'knowledge-base', name: 'Knowledge Base', icon: Brain, description: 'Search and explore content', route: '/knowledge-base' },
+  { id: 'projects', name: 'Projects', icon: TrendingUp, description: 'Manage strategic initiatives', route: '/projects' },
+  { id: 'consultant-mode', name: 'Consultant Mode', icon: TrendingUp, description: 'Strategic frameworks & deliverables', route: '/consultant-mode' },
+  { id: 'ingestion', name: 'Ingestion', icon: Upload, description: 'Upload and process files', route: '/ingestion' },
+  { id: 'settings', name: 'Settings', icon: Settings, description: 'Configure system preferences', route: '/settings' },
+  { id: 'system-status', name: 'System Status & Activity', icon: Activity, description: 'Monitor system health', route: '/system-status' },
 ];
 
 export function AppSidebar({}: AppSidebarProps) {

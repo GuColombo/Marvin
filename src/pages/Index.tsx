@@ -3,8 +3,9 @@ import { AppSidebar } from "@/components/marvin/AppSidebar";
 import { TopBar } from "@/components/marvin/TopBar";
 import { LoginPage } from "@/components/marvin/LoginPage";
 
-import { MemoryViewer } from "@/components/marvin/MemoryViewer";
-import { DigestView } from "@/components/marvin/DigestView";
+import { Knowledgebase } from "@/components/marvin/Knowledgebase";
+import { ProjectsView } from "@/components/marvin/ProjectsView";
+import { ToolsAccess } from "@/components/marvin/ToolsAccess";
 import { QueryInterface } from "@/components/marvin/QueryInterface";
 import { ConsultantMode } from "@/components/marvin/ConsultantMode";
 import { BehaviorConfiguration } from "@/components/marvin/BehaviorConfiguration";
@@ -19,9 +20,11 @@ import { WhatsNew } from "@/components/marvin/WhatsNew";
 import { ChatInterface } from "@/components/marvin/ChatInterface";
 import { MeetingAnalyst } from "@/components/marvin/MeetingAnalyst";
 import { EmailAnalyst } from "@/components/marvin/EmailAnalyst";
+import { IntakeSection } from "@/components/marvin/IntakeSection";
 import { MarvinProvider } from "@/contexts/MarvinContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useParams, useLocation } from "react-router-dom";
+import { Upload } from "lucide-react";
 
 const Index = () => {
   const { isAuthenticated, login, isLoading } = useAuth();
@@ -52,26 +55,38 @@ const Index = () => {
     if (path.startsWith('/chat')) {
       return <ChatInterface />;
     }
+    if (path.startsWith('/knowledge-base')) {
+      return <Knowledgebase />;
+    }
+    if (path.startsWith('/projects')) {
+      return <ProjectsView />;
+    }
+    if (path.startsWith('/consultant-mode')) {
+      return <ConsultantMode />;
+    }
+    if (path.startsWith('/ingestion')) {
+      return <IntakeSection 
+        title="Document Ingestion" 
+        description="Upload and process your files" 
+        acceptedTypes={['.pdf', '.docx', '.txt', '.md']} 
+        icon={Upload} 
+        contentType="document" 
+      />;
+    }
+    if (path.startsWith('/tools-access')) {
+      return <ToolsAccess />;
+    }
     if (path.startsWith('/meetings')) {
       return <MeetingAnalyst />;
     }
     if (path.startsWith('/files')) {
-      return <FileInspector />; // Will enhance this later
+      return <FileInspector />;
     }
     if (path.startsWith('/emails')) {
       return <EmailAnalyst />;
     }
-    if (path.startsWith('/kb')) {
-      return <MemoryViewer />; // Will enhance this later
-    }
-    if (path === '/digest') {
-      return <DigestView />;
-    }
     if (path === '/query') {
       return <QueryInterface />;
-    }
-    if (path === '/consultant') {
-      return <ConsultantMode />;
     }
     if (path === '/settings') {
       return <Settings />;
@@ -94,7 +109,7 @@ const Index = () => {
     if (path === '/whats-new') {
       return <WhatsNew />;
     }
-    if (path === '/logs') {
+    if (path === '/system-status') {
       return <SystemLogs />;
     }
     
