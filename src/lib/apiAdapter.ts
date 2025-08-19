@@ -13,8 +13,14 @@ import {
   SearchResult, 
   ChatDelta,
   DataMode,
-  SystemConfig 
+  SystemConfig,
+  Project,
+  ToolPermission,
+  ToolUsageRequest,
+  MindmapNode,
+  MindmapEdge
 } from './types';
+import { LiveAPIProvider } from './liveAPIProvider';
 import { 
   mockHealth, 
   mockMeetings, 
@@ -318,6 +324,7 @@ class MockProvider {
 class APIAdapter {
   private liveProvider = new LiveProvider();
   private mockProvider = new MockProvider();
+  private liveAPIProvider = new LiveAPIProvider();
 
   private async tryLiveOrFallback<T>(
     liveCall: () => Promise<T>,
@@ -456,6 +463,104 @@ class APIAdapter {
       () => this.liveProvider.updateSystemConfig(config),
       () => this.mockProvider.updateSystemConfig(config)
     );
+  }
+
+  // New v0.6 methods for enhanced features
+  
+  async listProjects(): Promise<Project[]> {
+    const stored = localStorage.getItem('marvin-projects');
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  async getProject(id: string): Promise<Project | null> {
+    const projects = await this.listProjects();
+    return projects.find(p => p.id === id) || null;
+  }
+
+  async saveProject(project: Project): Promise<Project> {
+    const projects = await this.listProjects();
+    const index = projects.findIndex(p => p.id === project.id);
+    
+    if (index >= 0) {
+      projects[index] = { ...project, updatedAt: new Date() };
+    } else {
+      projects.push({ ...project, createdAt: new Date(), updatedAt: new Date() });
+    }
+    
+    localStorage.setItem('marvin-projects', JSON.stringify(projects));
+    return project;
+  }
+
+  async deleteProject(id: string): Promise<boolean> {
+    const projects = await this.listProjects();
+    const filtered = projects.filter(p => p.id !== id);
+    localStorage.setItem('marvin-projects', JSON.stringify(filtered));
+    return true;
+  }
+
+  async getMindmapData(): Promise<{ nodes: MindmapNode[]; edges: MindmapEdge[] }> {
+    const stored = localStorage.getItem('marvin-mindmap');
+    return stored ? JSON.parse(stored) : { nodes: [], edges: [] };
+  }
+
+  async saveMindmapData(data: { nodes: MindmapNode[]; edges: MindmapEdge[] }): Promise<void> {
+    localStorage.setItem('marvin-mindmap', JSON.stringify(data));
+  }
+
+  async getToolPermissions(): Promise<ToolPermission[]> {
+    const stored = localStorage.getItem('marvin-tool-permissions');
+    return stored ? JSON.parse(stored) : [];
+  }
+
+  async saveToolPermission(permission: ToolPermission): Promise<ToolPermission> {
+    const permissions = await this.getToolPermissions();
+    const index = permissions.findIndex(p => p.toolId === permission.toolId);
+    
+    if (index >= 0) {
+      permissions[index] = permission;
+    } else {
+      permissions.push(permission);
+    }
+    
+    localStorage.setItem('marvin-tool-permissions', JSON.stringify(permissions));
+    return permission;
+  }
+
+  async requestToolUsage(request: ToolUsageRequest): Promise<{ approved: boolean; message?: string }> {
+    const stored = localStorage.getItem('marvin-tool-requests');
+    const requests = stored ? JSON.parse(stored) : [];
+    requests.push(request);
+    localStorage.setItem('marvin-tool-requests', JSON.stringify(requests));
+    
+    return { approved: false, message: 'Awaiting user approval' };
+  }
+
+  async runIngestionNow(): Promise<{ success: boolean; message: string }> {
+    if (this.liveAPIProvider.available) {
+      try {
+        const result = await this.liveAPIProvider.ingestCommit({});
+        return { success: result.success, message: 'Live ingestion completed' };
+      } catch (error) {
+        console.warn('Live ingestion failed:', error);
+      }
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    return { success: true, message: 'Mock ingestion completed successfully' };
+  }
+
+  async reindexSelection(items: string[]): Promise<{ success: boolean; message: string }> {
+    if (this.liveAPIProvider.available) {
+      try {
+        const result = await this.liveAPIProvider.ingestCommit({ items });
+        return { success: result.success, message: 'Live reindexing completed' };
+      } catch (error) {
+        console.warn('Live reindexing failed:', error);
+      }
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    return { success: true, message: `Mock reindexing of ${items.length} items completed` };
   }
 }
 

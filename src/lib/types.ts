@@ -270,3 +270,123 @@ export interface SystemConfig {
   lastUpdated: Date;
   version: string;
 }
+
+// New v0.6 types for enhanced features
+
+export interface Project {
+  id: string;
+  name: string;
+  description: string;
+  status: 'active' | 'paused' | 'completed' | 'archived';
+  tags: string[];
+  stakeholders: string[];
+  objectives: string[];
+  createdAt: Date;
+  updatedAt: Date;
+  lastActivity: Date;
+  timeline: ProjectTask[];
+  artifacts: ProjectArtifact[];
+}
+
+export interface ProjectTask {
+  id: string;
+  title: string;
+  description: string;
+  status: 'not-started' | 'in-progress' | 'completed' | 'blocked';
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  assignee?: string;
+  dependencies: string[];
+  startDate: Date;
+  endDate: Date;
+  progress: number;
+  artifacts: string[];
+  lastUpdate: Date;
+}
+
+export interface ProjectArtifact {
+  id: string;
+  type: 'meeting' | 'file' | 'email' | 'note';
+  sourceId: string;
+  title: string;
+  summary: string;
+  tags: string[];
+  addedAt: Date;
+  relevanceScore: number;
+}
+
+export interface MindmapNode {
+  id: string;
+  label: string;
+  type: 'topic' | 'entity' | 'artifact' | 'project';
+  size: number;
+  color?: string;
+  metadata: {
+    artifactCount?: number;
+    lastActivity?: Date;
+    projectId?: string;
+    tags?: string[];
+  };
+}
+
+export interface MindmapEdge {
+  id: string;
+  from: string;
+  to: string;
+  type: 'reference' | 'co-mention' | 'temporal' | 'dependency';
+  weight: number;
+  metadata: {
+    source?: string;
+    confidence?: number;
+  };
+}
+
+export interface ToolPermission {
+  toolId: string;
+  enabled: boolean;
+  askBeforeUsing: boolean;
+  budgetCap?: number;
+  scopes: string[];
+  apiKey?: string;
+  lastUsed?: Date;
+  totalSpent: number;
+}
+
+export interface ToolUsageRequest {
+  taskId: string;
+  tools: {
+    id: string;
+    name: string;
+    purpose: string;
+    estimatedCost: number;
+  }[];
+  totalEstimatedCost: number;
+  projectContext?: string;
+  timestamp: Date;
+}
+
+export interface DocumentExportRequest {
+  templateId: string;
+  frameworkId?: string;
+  projectId?: string;
+  tokens: Record<string, string>;
+  branding?: {
+    useProjectBranding: boolean;
+    customBranding?: Partial<BrandAssets>;
+  };
+}
+
+export interface BrandAssets {
+  logo?: File | string;
+  colors: {
+    primary: string;
+    secondary: string;
+    accent: string;
+    background: string;
+    text: string;
+  };
+  fonts: {
+    heading: string;
+    body: string;
+  };
+  watermark?: File | string;
+}
