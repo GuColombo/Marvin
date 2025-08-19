@@ -273,13 +273,13 @@ export function MindmapView() {
   };
 
   const generateClusterGroups = (clusterBy: string) => {
-    const groups: any = {};
+    const groups: Record<string, any> = {};
     nodes.forEach(node => {
-      let groupKey = node.type;
+      let groupKey: string = node.type;
       if (clusterBy === 'project' && node.metadata.projectId) {
         groupKey = node.metadata.projectId;
-      } else if (clusterBy === 'topic' && node.metadata.tags) {
-        groupKey = node.metadata.tags[0] || node.type;
+      } else if (clusterBy === 'topic' && node.metadata.tags && node.metadata.tags.length > 0) {
+        groupKey = node.metadata.tags[0];
       }
       
       if (!groups[groupKey]) {
