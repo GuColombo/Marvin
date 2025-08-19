@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Mail, Users, Calendar, MessageSquare, TrendingUp, TrendingDown, Minus, MailOpen } from 'lucide-react';
-import { IntakeSection } from './IntakeSection';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -321,14 +321,19 @@ export function EmailAnalyst() {
         </p>
       </div>
 
-      {/* Intake Section */}
-      <IntakeSection
-        title="Add Email Content"
-        description="Upload email exports, mbox files, or conversation archives"
-        acceptedTypes={['.eml', '.msg', '.mbox', '.pst']}
-        icon={MailOpen}
-        contentType="email"
-      />
+      {/* Integration with Settings Ingestion */}
+      <Card>
+        <CardContent className="p-6 text-center">
+          <MailOpen className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+          <h3 className="text-lg font-medium mb-2">Upload Email Content</h3>
+          <p className="text-muted-foreground mb-4">
+            Go to Settings → Ingestion to upload email exports and conversation archives
+          </p>
+          <Button onClick={() => window.location.href = '/settings'}>
+            Go to Settings
+          </Button>
+        </CardContent>
+      </Card>
 
       <div className="flex items-center justify-between">
         <h2 className="text-headline font-semibold">Emails</h2>

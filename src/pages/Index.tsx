@@ -20,11 +20,9 @@ import { WhatsNew } from "@/components/marvin/WhatsNew";
 import { ChatInterface } from "@/components/marvin/ChatInterface";
 import { MeetingAnalyst } from "@/components/marvin/MeetingAnalyst";
 import { EmailAnalyst } from "@/components/marvin/EmailAnalyst";
-import { IntakeSection } from "@/components/marvin/IntakeSection";
 import { MarvinProvider } from "@/contexts/MarvinContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useParams, useLocation } from "react-router-dom";
-import { Upload } from "lucide-react";
 
 const Index = () => {
   const { isAuthenticated, login, isLoading } = useAuth();

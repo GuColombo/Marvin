@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FileText, Eye, Tag, Calendar, FileType, Hash, ChevronRight, Upload } from 'lucide-react';
-import { IntakeSection } from './IntakeSection';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -43,14 +43,19 @@ export function FileInspector() {
         </p>
       </div>
 
-      {/* Intake Section */}
-      <IntakeSection
-        title="Add Documents"
-        description="Upload documents, PDFs, text files, or presentations"
-        acceptedTypes={['.pdf', '.doc', '.docx', '.txt', '.md', '.ppt', '.pptx']}
-        icon={Upload}
-        contentType="document"
-      />
+      {/* Integration with Settings Ingestion */}
+      <Card>
+        <CardContent className="p-6 text-center">
+          <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+          <h3 className="text-lg font-medium mb-2">Upload Documents</h3>
+          <p className="text-muted-foreground mb-4">
+            Go to Settings → Ingestion to upload documents and files for analysis
+          </p>
+          <Button onClick={() => window.location.href = '/settings'}>
+            Go to Settings
+          </Button>
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* File List */}

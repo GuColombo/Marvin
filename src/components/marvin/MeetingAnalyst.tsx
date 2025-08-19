@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Users, MessageSquare, CheckCircle, Download, Video } from 'lucide-react';
-import { IntakeSection } from './IntakeSection';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -367,14 +367,19 @@ export function MeetingAnalyst() {
         </p>
       </div>
 
-      {/* Intake Section */}
-      <IntakeSection
-        title="Add Meeting Content"
-        description="Upload meeting recordings, transcripts, or calendar exports"
-        acceptedTypes={['.mp4', '.m4a', '.wav', '.mp3', '.vtt', '.srt', '.ics']}
-        icon={Video}
-        contentType="meeting"
-      />
+      {/* Integration with Settings Ingestion */}
+      <Card>
+        <CardContent className="p-6 text-center">
+          <Video className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+          <h3 className="text-lg font-medium mb-2">Upload Meeting Content</h3>
+          <p className="text-muted-foreground mb-4">
+            Go to Settings → Ingestion to upload meeting recordings and transcripts
+          </p>
+          <Button onClick={() => window.location.href = '/settings'}>
+            Go to Settings
+          </Button>
+        </CardContent>
+      </Card>
 
       <div className="flex items-center justify-between">
         <h2 className="text-headline font-semibold">Meetings</h2>
