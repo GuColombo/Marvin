@@ -35,9 +35,9 @@ const modules = [
   { id: 'knowledge-base', name: 'Knowledge Base', icon: Brain, description: 'Search and explore content', route: '/knowledge-base' },
   { id: 'projects', name: 'Projects', icon: TrendingUp, description: 'Manage strategic initiatives', route: '/projects' },
   { id: 'consultant-mode', name: 'Consultant Mode', icon: TrendingUp, description: 'Strategic frameworks & deliverables', route: '/consultant-mode' },
-  { id: 'ingestion', name: 'Ingestion', icon: Upload, description: 'Upload and process files', route: '/ingestion' },
-  { id: 'settings', name: 'Settings', icon: Settings, description: 'Configure system preferences', route: '/settings' },
-  { id: 'system-status', name: 'System Status & Activity', icon: Activity, description: 'Monitor system health', route: '/system-status' },
+  { id: 'meetings', name: 'Meeting Analysis', icon: CalendarDays, description: 'Analyze meeting recordings', route: '/meetings' },
+  { id: 'files', name: 'File Analysis', icon: FileSearch, description: 'Analyze documents and files', route: '/files' },
+  { id: 'emails', name: 'Email Analysis', icon: Mail, description: 'Analyze email communications', route: '/emails' },
 ];
 
 export function AppSidebar({}: AppSidebarProps) {

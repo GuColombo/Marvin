@@ -64,15 +64,6 @@ const Index = () => {
     if (path.startsWith('/consultant-mode')) {
       return <ConsultantMode />;
     }
-    if (path.startsWith('/ingestion')) {
-      return <IntakeSection 
-        title="Document Ingestion" 
-        description="Upload and process your files" 
-        acceptedTypes={['.pdf', '.docx', '.txt', '.md']} 
-        icon={Upload} 
-        contentType="document" 
-      />;
-    }
     if (path.startsWith('/tools-access')) {
       return <ToolsAccess />;
     }

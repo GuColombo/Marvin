@@ -180,8 +180,9 @@ export function Settings() {
         </div>
       </div>
 
-      <Tabs defaultValue="files" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-6">
+      <Tabs defaultValue="ingestion" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-7">
+          <TabsTrigger value="ingestion">Ingestion</TabsTrigger>
           <TabsTrigger value="files">Files</TabsTrigger>
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
           <TabsTrigger value="emails">Email</TabsTrigger>
@@ -189,6 +190,47 @@ export function Settings() {
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
           <TabsTrigger value="privacy">Privacy</TabsTrigger>
         </TabsList>
+
+        {/* Ingestion Tab */}
+        <TabsContent value="ingestion" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-headline flex items-center gap-2">
+                <Upload className="h-5 w-5" />
+                File Ingestion
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="text-center py-8">
+                <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <h3 className="text-lg font-medium mb-2">Upload Files for Processing</h3>
+                <p className="text-muted-foreground mb-4">
+                  Drag and drop files here or click to browse. Supported formats: PDF, DOCX, TXT, MD
+                </p>
+                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 hover:border-muted-foreground/50 transition-colors cursor-pointer">
+                  <div className="flex flex-col items-center gap-2">
+                    <Upload className="h-8 w-8 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">
+                      Drop files here or click to select
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <Label className="text-callout font-medium">Recent Uploads</Label>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between p-3 border rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-sm">No recent uploads</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
         {/* Files Tab */}
         <TabsContent value="files" className="space-y-6">
