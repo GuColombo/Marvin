@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Network, DataSet } from 'vis-network';
+import { Network } from 'vis-network';
+import { DataSet } from 'vis-data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
