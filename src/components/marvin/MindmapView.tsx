@@ -307,13 +307,11 @@ export function MindmapView() {
     try {
       const result = await apiAdapter.reindexSelection(selectedNodes);
       toast({
-        title: result.success ? 'Success' : 'Error',
-        description: result.message,
-        variant: result.success ? 'default' : 'destructive'
+        title: 'Success',
+        description: `${result.status} - ${result.pathsProcessed} paths processed`,
+        variant: 'default'
       });
-      if (result.success) {
-        await loadMindmapData();
-      }
+      await loadMindmapData();
     } catch (error) {
       toast({
         title: 'Reindex Error',

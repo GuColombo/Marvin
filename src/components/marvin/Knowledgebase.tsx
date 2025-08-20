@@ -40,10 +40,9 @@ export function Knowledgebase() {
     try {
       const results = await apiAdapter.kbSearch({ 
         query,
-        type: filters.type.length === 1 ? filters.type[0] as any : 'all',
-        limit: 50
+        filters: {}
       });
-      setSearchResults(results.items);
+      setSearchResults(results.results);
     } catch (error) {
       toast({
         title: 'Search Error',
@@ -69,9 +68,9 @@ export function Knowledgebase() {
     try {
       const result = await apiAdapter.reindexSelection(selectedItems);
       toast({
-        title: result.success ? 'Success' : 'Error',
-        description: result.message,
-        variant: result.success ? 'default' : 'destructive'
+        title: 'Success',
+        description: `${result.status} - ${result.pathsProcessed} paths processed`,
+        variant: 'default'
       });
       setSelectedItems([]);
     } catch (error) {
@@ -211,26 +210,22 @@ export function Knowledgebase() {
                       <div className="flex-1 space-y-2">
                         <div className="flex items-center gap-2">
                           <h4 className="font-medium">{item.title}</h4>
-                          <Badge variant="outline">
-                            {item.type}
-                          </Badge>
-                          <Badge variant="secondary">
-                            Score: {(item.relevanceScore * 100).toFixed(0)}%
-                          </Badge>
+                           <Badge variant="outline">
+                             {item.source}
+                           </Badge>
+                           <Badge variant="secondary">
+                             Score: {(item.score * 100).toFixed(0)}%
+                           </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground">
                           {item.snippet}
                         </p>
-                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
-                            {new Date(item.lastUpdated).toLocaleDateString()}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Tag className="h-3 w-3" />
-                            {item.tags.join(', ')}
-                          </div>
-                        </div>
+                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                           <div className="flex items-center gap-1">
+                             <Calendar className="h-3 w-3" />
+                             Source: {item.source}
+                           </div>
+                         </div>
                       </div>
                       <Dialog>
                         <DialogTrigger asChild>
@@ -241,17 +236,14 @@ export function Knowledgebase() {
                         <DialogContent className="max-w-2xl">
                           <DialogHeader>
                             <DialogTitle>{item.title}</DialogTitle>
-                            <DialogDescription>
-                              {item.type} • Score: {(item.relevanceScore * 100).toFixed(0)}%
-                            </DialogDescription>
-                          </DialogHeader>
-                          <ScrollArea className="max-h-96">
-                            <div className="space-y-4">
-                              <p>{item.snippet}</p>
-                              <div className="text-sm text-muted-foreground">
-                                Tags: {item.tags.join(', ')}
-                              </div>
-                            </div>
+                             <DialogDescription>
+                               {item.source} • Score: {(item.score * 100).toFixed(0)}%
+                             </DialogDescription>
+                           </DialogHeader>
+                           <ScrollArea className="max-h-96">
+                             <div className="space-y-4">
+                               <p>{item.snippet}</p>
+                             </div>
                           </ScrollArea>
                         </DialogContent>
                       </Dialog>

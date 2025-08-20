@@ -122,9 +122,9 @@ export function ProjectDetail({ project, onBack, onUpdate }: ProjectDetailProps)
     try {
       const result = await apiAdapter.runIngestionNow();
       toast({
-        title: result.success ? 'Success' : 'Error',
-        description: result.message,
-        variant: result.success ? 'default' : 'destructive'
+        title: 'Success',
+        description: result.status,
+        variant: 'default'
       });
     } catch (error) {
       toast({
