@@ -282,15 +282,25 @@ export function ProjectDetail({ project, onBack, onUpdate }: ProjectDetailProps)
                       <div className="grid grid-cols-3 gap-4 text-sm">
                         <div>
                           <span className="text-muted-foreground">Start:</span>
-                          <div>{task.startDate.toLocaleDateString()}</div>
+                          <div>
+                            {(() => {
+                              const startDate = (task as any).start || task.startDate;
+                              return startDate ? new Date(startDate).toLocaleDateString() : 'Not set';
+                            })()}
+                          </div>
                         </div>
                         <div>
                           <span className="text-muted-foreground">End:</span>
-                          <div>{task.endDate.toLocaleDateString()}</div>
+                          <div>
+                            {(() => {
+                              const endDate = (task as any).end || task.endDate;
+                              return endDate ? new Date(endDate).toLocaleDateString() : 'Not set';
+                            })()}
+                          </div>
                         </div>
                         <div>
                           <span className="text-muted-foreground">Assignee:</span>
-                          <div>{task.assignee || 'Unassigned'}</div>
+                          <div>{(task as any).owner || task.assignee || 'Unassigned'}</div>
                         </div>
                       </div>
                       
