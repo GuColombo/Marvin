@@ -60,6 +60,31 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Backend Integration
+
+Marvin is designed to work with configurable backend services. The frontend connects to your API via environment variables:
+
+### Environment Configuration
+
+Copy `.env.example` to `.env` and configure:
+
+```bash
+VITE_API_URL=http://127.0.0.1:8123  # Your backend API URL
+VITE_USE_MSW=false                   # Enable/disable development mocks
+```
+
+### CORS Requirements
+
+Your backend must allow CORS requests from the frontend origin. For local development, ensure your API allows:
+
+- Origin: `http://127.0.0.1:8123` (or your chosen frontend port)
+- Methods: `GET, POST, PUT, DELETE, OPTIONS`
+- Headers: `Content-Type, Authorization`
+
+### API Documentation
+
+See `src/api/openapi.yaml` for complete endpoint specifications that your backend should implement.
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/5dd4f153-7425-4dc9-9b65-55d686dd8ac1) and click on Share -> Publish.

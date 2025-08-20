@@ -1,0 +1,784 @@
+openapi: 3.0.0
+info:
+  title: Marvin AI Assistant API
+  version: 1.0.0
+  description: Backend API for Marvin AI Assistant - Knowledge Management & Analysis Platform
+
+servers:
+  - url: http://127.0.0.1:8123
+    description: Local development server
+
+paths:
+  /upload/email:
+    post:
+      summary: Upload email files for processing
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Upload successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+
+  /upload/calendar:
+    post:
+      summary: Upload calendar files for processing
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Upload successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+
+  /upload/files:
+    post:
+      summary: Upload general files for processing
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '200':
+          description: Upload successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
+
+  /ingest/commit:
+    post:
+      summary: Commit ingestion of files to knowledge base
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngestRequest'
+      responses:
+        '200':
+          description: Ingestion successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngestResponse'
+
+  /kb/search:
+    post:
+      summary: Search knowledge base
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KBSearchRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KBSearchResponse'
+
+  /kb/graph:
+    get:
+      summary: Get knowledge base graph data
+      responses:
+        '200':
+          description: Graph data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KBGraphResponse'
+
+  /chat/threads:
+    get:
+      summary: List all chat threads
+      responses:
+        '200':
+          description: List of chat threads
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatThreadsResponse'
+
+  /chat/history:
+    get:
+      summary: Get chat history for a thread
+      parameters:
+        - name: threadId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Chat history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatHistoryResponse'
+
+  /chat/send:
+    post:
+      summary: Send a chat message
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatSendRequest'
+      responses:
+        '200':
+          description: Chat response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatSendResponse'
+
+  /projects:
+    get:
+      summary: List all projects
+      responses:
+        '200':
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectsResponse'
+
+  /projects/{id}:
+    get:
+      summary: Get project details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetail'
+
+  /projects/{id}/kanban:
+    get:
+      summary: Get project kanban board
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Kanban board data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KanbanResponse'
+
+  /projects/{id}/timeline:
+    get:
+      summary: Get project timeline
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Timeline data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimelineResponse'
+
+  /topics:
+    get:
+      summary: List all topics
+      responses:
+        '200':
+          description: List of topics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectsResponse'
+
+  /topics/{id}:
+    get:
+      summary: Get topic details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Topic details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetail'
+
+  /digest/generate:
+    post:
+      summary: Generate digest for scope
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DigestRequest'
+      responses:
+        '200':
+          description: Generated digest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DigestResponse'
+
+  /watch/list:
+    get:
+      summary: List all watch paths
+      responses:
+        '200':
+          description: List of watch paths
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WatchListResponse'
+
+  /watch/add:
+    post:
+      summary: Add new watch path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WatchAddRequest'
+      responses:
+        '200':
+          description: Watch path added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WatchAddResponse'
+
+  /watch/remove:
+    post:
+      summary: Remove watch path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WatchRemoveRequest'
+      responses:
+        '200':
+          description: Watch path removed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  /schedule/update:
+    post:
+      summary: Update schedule configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleUpdateRequest'
+      responses:
+        '200':
+          description: Schedule updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+components:
+  schemas:
+    UploadResponse:
+      type: object
+      properties:
+        run_id:
+          type: string
+        files_saved:
+          type: integer
+      required:
+        - run_id
+        - files_saved
+
+    IngestRequest:
+      type: object
+      properties:
+        paths:
+          type: array
+          items:
+            type: string
+        collection:
+          type: string
+      required:
+        - paths
+        - collection
+
+    IngestResponse:
+      type: object
+      properties:
+        files:
+          type: integer
+        chunks_added:
+          type: integer
+      required:
+        - files
+        - chunks_added
+
+    KBSearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+        filters:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - query
+
+    KBSearchResult:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        score:
+          type: number
+        source:
+          type: string
+        snippet:
+          type: string
+      required:
+        - id
+        - title
+        - score
+        - source
+        - snippet
+
+    KBSearchResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/KBSearchResult'
+      required:
+        - results
+
+    KBGraphNode:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        type:
+          type: string
+      required:
+        - id
+        - label
+
+    KBGraphEdge:
+      type: object
+      properties:
+        from:
+          type: string
+        to:
+          type: string
+        weight:
+          type: number
+        label:
+          type: string
+      required:
+        - from
+        - to
+
+    KBGraphResponse:
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/KBGraphNode'
+        edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/KBGraphEdge'
+      required:
+        - nodes
+        - edges
+
+    ChatThread:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - id
+        - name
+        - updatedAt
+
+    ChatThreadsResponse:
+      type: object
+      properties:
+        threads:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatThread'
+      required:
+        - threads
+
+    ChatMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [user, assistant]
+        text:
+          type: string
+        ts:
+          type: string
+        toolUsage:
+          type: object
+      required:
+        - role
+        - text
+        - ts
+
+    ChatHistoryResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+      required:
+        - messages
+
+    ChatSendRequest:
+      type: object
+      properties:
+        threadId:
+          type: string
+        message:
+          type: string
+      required:
+        - message
+
+    ChatSendResponse:
+      type: object
+      properties:
+        reply:
+          type: string
+        citations:
+          type: array
+          items:
+            type: object
+        steps:
+          type: array
+          items:
+            type: object
+      required:
+        - reply
+
+    ProjectItem:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        owner:
+          type: string
+        status:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - id
+        - name
+        - status
+        - updatedAt
+
+    ProjectsResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectItem'
+      required:
+        - items
+
+    ProjectDetail:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        owner:
+          type: string
+        links:
+          type: array
+          items:
+            type: object
+        artifacts:
+          type: array
+          items:
+            type: object
+      required:
+        - id
+        - name
+        - description
+        - owner
+
+    KanbanCard:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        assignee:
+          type: string
+        due:
+          type: string
+      required:
+        - id
+        - title
+
+    KanbanColumn:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        cards:
+          type: array
+          items:
+            $ref: '#/components/schemas/KanbanCard'
+      required:
+        - id
+        - title
+        - cards
+
+    KanbanResponse:
+      type: object
+      properties:
+        columns:
+          type: array
+          items:
+            $ref: '#/components/schemas/KanbanColumn'
+      required:
+        - columns
+
+    TimelineItem:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [milestone, task]
+        title:
+          type: string
+        start:
+          type: string
+        end:
+          type: string
+        owner:
+          type: string
+        status:
+          type: string
+        dependencies:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - type
+        - title
+        - start
+
+    TimelineResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimelineItem'
+      required:
+        - items
+
+    DigestSection:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        links:
+          type: array
+          items:
+            type: object
+      required:
+        - title
+        - content
+
+    DigestRequest:
+      type: object
+      properties:
+        scope:
+          type: string
+          enum: [project, topic, global]
+        id:
+          type: string
+      required:
+        - scope
+
+    DigestResponse:
+      type: object
+      properties:
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/DigestSection'
+      required:
+        - sections
+
+    WatchPath:
+      type: object
+      properties:
+        id:
+          type: string
+        path:
+          type: string
+        type:
+          type: string
+          enum: [files, meetings]
+      required:
+        - id
+        - path
+        - type
+
+    WatchListResponse:
+      type: object
+      properties:
+        paths:
+          type: array
+          items:
+            $ref: '#/components/schemas/WatchPath'
+      required:
+        - paths
+
+    WatchAddRequest:
+      type: object
+      properties:
+        path:
+          type: string
+        type:
+          type: string
+          enum: [files, meetings]
+      required:
+        - path
+        - type
+
+    WatchAddResponse:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+
+    WatchRemoveRequest:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+
+    ScheduleWindow:
+      type: object
+      properties:
+        start:
+          type: string
+        end:
+          type: string
+      required:
+        - start
+        - end
+
+    ScheduleUpdateRequest:
+      type: object
+      properties:
+        target:
+          type: string
+          enum: [files, meetings]
+        intervalMinutes:
+          type: integer
+        window:
+          $ref: '#/components/schemas/ScheduleWindow'
+      required:
+        - target
+        - intervalMinutes
+        - window
+
+    SuccessResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          enum: [true]
+      required:
+        - ok

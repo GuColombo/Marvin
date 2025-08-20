@@ -48,7 +48,7 @@ export function MindmapView() {
   const loadMindmapData = async () => {
     setLoading(true);
     try {
-      const data = await apiAdapter.getMindmapData();
+      const data = await apiAdapter.getMindmapData('project');
       if (data.nodes.length === 0) {
         generateMockData();
       } else {

@@ -182,7 +182,7 @@ export function Settings() {
 
       <Tabs defaultValue="ingestion" className="space-y-6">
         <TabsList className="grid w-full grid-cols-7">
-          <TabsTrigger value="ingestion">Ingestion</TabsTrigger>
+        <TabsTrigger value="ingestion">Ingestion</TabsTrigger>
           <TabsTrigger value="files">Files</TabsTrigger>
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
           <TabsTrigger value="emails">Email</TabsTrigger>

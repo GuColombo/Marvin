@@ -20,7 +20,43 @@ import {
   MindmapNode,
   MindmapEdge
 } from './types';
-import { LiveAPIProvider } from './liveAPIProvider';
+import {
+  UploadResponse,
+  IngestRequest,
+  IngestResponse,
+  KBSearchRequest,
+  KBSearchResponse,
+  KBGraphResponse,
+  ChatThreadsResponse,
+  ChatHistoryResponse,
+  ChatSendRequest,
+  ChatSendResponse,
+  ProjectsResponse,
+  ProjectDetail as APIProjectDetail,
+  KanbanResponse,
+  TimelineResponse,
+  DigestRequest,
+  DigestResponse,
+  WatchListResponse,
+  WatchAddRequest,
+  WatchAddResponse,
+  WatchRemoveRequest,
+  ScheduleUpdateRequest,
+  UploadResponseSchema,
+  IngestResponseSchema,
+  KBSearchResponseSchema,
+  KBGraphResponseSchema,
+  ChatThreadsResponseSchema,
+  ChatHistoryResponseSchema,
+  ChatSendResponseSchema,
+  ProjectsResponseSchema,
+  KanbanResponseSchema,
+  TimelineResponseSchema,
+  DigestResponseSchema,
+  WatchListResponseSchema,
+  WatchAddResponseSchema,
+  SuccessResponseSchema
+} from './schemas';
 import { 
   mockHealth, 
   mockMeetings, 
@@ -35,27 +71,24 @@ import {
   mockSystemConfig 
 } from './mockData';
 
-const BASE_API = 'http://127.0.0.1:8112';
+const getApiUrl = () => import.meta.env.VITE_API_URL || 'http://127.0.0.1:8123';
+const useMSW = () => import.meta.env.VITE_USE_MSW === 'true';
 
-// Storage key for data mode
 const DATA_MODE_KEY = 'marvin.dataMode';
 
-// Get current data mode from localStorage
 export function getDataMode(): DataMode {
   const stored = localStorage.getItem(DATA_MODE_KEY);
-  return (stored as DataMode) || 'mock';
+  return (stored as DataMode) || (useMSW() ? 'mock' : 'live');
 }
 
-// Set data mode in localStorage
 export function setDataMode(mode: DataMode): void {
   localStorage.setItem(DATA_MODE_KEY, mode);
 }
 
-// Live Provider - attempts to call real API endpoints
 class LiveProvider {
   private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     try {
-      const response = await fetch(`${BASE_API}${endpoint}`, {
+      const response = await fetch(`${getApiUrl()}${endpoint}`, {
         headers: {
           'Content-Type': 'application/json',
           ...options?.headers,
@@ -72,6 +105,129 @@ class LiveProvider {
       console.warn(`Live API call failed for ${endpoint}:`, error);
       throw error;
     }
+  }
+
+  async uploadFiles(files: File[], type: 'email' | 'calendar' | 'files'): Promise<UploadResponse> {
+    const formData = new FormData();
+    files.forEach(file => formData.append('files', file));
+    
+    const response = await fetch(`${getApiUrl()}/upload/${type}`, {
+      method: 'POST',
+      body: formData,
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Upload failed: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    return UploadResponseSchema.parse(data);
+  }
+
+  async ingestCommit(request: IngestRequest): Promise<IngestResponse> {
+    const data = await this.request<IngestResponse>('/ingest/commit', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+    return IngestResponseSchema.parse(data);
+  }
+
+  async kbSearch(request: KBSearchRequest): Promise<KBSearchResponse> {
+    const data = await this.request<KBSearchResponse>('/kb/search', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+    return KBSearchResponseSchema.parse(data);
+  }
+
+  async kbGraph(): Promise<KBGraphResponse> {
+    const data = await this.request<KBGraphResponse>('/kb/graph');
+    return KBGraphResponseSchema.parse(data);
+  }
+
+  async getChatThreads(): Promise<ChatThreadsResponse> {
+    const data = await this.request<ChatThreadsResponse>('/chat/threads');
+    return ChatThreadsResponseSchema.parse(data);
+  }
+
+  async getChatHistory(threadId: string): Promise<ChatHistoryResponse> {
+    const data = await this.request<ChatHistoryResponse>(`/chat/history?threadId=${threadId}`);
+    return ChatHistoryResponseSchema.parse(data);
+  }
+
+  async sendChat(request: ChatSendRequest): Promise<ChatSendResponse> {
+    const data = await this.request<ChatSendResponse>('/chat/send', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+    return ChatSendResponseSchema.parse(data);
+  }
+
+  async getProjects(): Promise<ProjectsResponse> {
+    const data = await this.request<ProjectsResponse>('/projects');
+    return ProjectsResponseSchema.parse(data);
+  }
+
+  async getProject(id: string): Promise<APIProjectDetail> {
+    return this.request<APIProjectDetail>(`/projects/${id}`);
+  }
+
+  async getProjectKanban(id: string): Promise<KanbanResponse> {
+    const data = await this.request<KanbanResponse>(`/projects/${id}/kanban`);
+    return KanbanResponseSchema.parse(data);
+  }
+
+  async getProjectTimeline(id: string): Promise<TimelineResponse> {
+    const data = await this.request<TimelineResponse>(`/projects/${id}/timeline`);
+    return TimelineResponseSchema.parse(data);
+  }
+
+  async getTopics(): Promise<ProjectsResponse> {
+    const data = await this.request<ProjectsResponse>('/topics');
+    return ProjectsResponseSchema.parse(data);
+  }
+
+  async getTopic(id: string): Promise<APIProjectDetail> {
+    return this.request<APIProjectDetail>(`/topics/${id}`);
+  }
+
+  async generateDigest(request: DigestRequest): Promise<DigestResponse> {
+    const data = await this.request<DigestResponse>('/digest/generate', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+    return DigestResponseSchema.parse(data);
+  }
+
+  async listWatchers(): Promise<WatchListResponse> {
+    const data = await this.request<WatchListResponse>('/watch/list');
+    return WatchListResponseSchema.parse(data);
+  }
+
+  async addWatcher(request: WatchAddRequest): Promise<WatchAddResponse> {
+    const data = await this.request<WatchAddResponse>('/watch/add', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+    return WatchAddResponseSchema.parse(data);
+  }
+
+  async removeWatcher(request: WatchRemoveRequest): Promise<{ ok: true }> {
+    const data = await this.request('/watch/remove', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+    const parsed = SuccessResponseSchema.parse(data);
+    return { ok: true };
+  }
+
+  async updateSchedule(request: ScheduleUpdateRequest): Promise<{ ok: true }> {
+    const data = await this.request('/schedule/update', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+    const parsed = SuccessResponseSchema.parse(data);
+    return { ok: true };
   }
 
   async getHealth(): Promise<HealthStatus> {
@@ -102,7 +258,7 @@ class LiveProvider {
     return this.request<EmailDetail>(`/emails/${id}`);
   }
 
-  async kbSearch(params: SearchParams): Promise<SearchResult> {
+  async kbSearchLegacy(params: SearchParams): Promise<SearchResult> {
     const searchParams = new URLSearchParams();
     if (params.query) searchParams.set('q', params.query);
     if (params.type) searchParams.set('type', params.type);
@@ -129,7 +285,7 @@ class LiveProvider {
   }
 
   async* sendChatMessage(threadId: string, message: string, attachments?: string[]): AsyncGenerator<ChatDelta> {
-    const response = await fetch(`${BASE_API}/chat/send`, {
+    const response = await fetch(`${getApiUrl()}/chat/send`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ threadId, message, attachments }),
@@ -182,8 +338,299 @@ class LiveProvider {
   }
 }
 
-// Mock Provider - returns realistic demo data
 class MockProvider {
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async uploadFiles(files: File[], type: 'email' | 'calendar' | 'files'): Promise<UploadResponse> {
+    await this.delay(1000 + Math.random() * 2000);
+    return {
+      run_id: `run_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      files_saved: files.length
+    };
+  }
+
+  async ingestCommit(request: IngestRequest): Promise<IngestResponse> {
+    await this.delay(500 + Math.random() * 1000);
+    return {
+      files: request.paths.length,
+      chunks_added: Math.floor(Math.random() * 500) + 100
+    };
+  }
+
+  async kbSearch(request: KBSearchRequest): Promise<KBSearchResponse> {
+    await this.delay(200 + Math.random() * 300);
+    
+    const mockResults = [
+      {
+        id: 'kb-1',
+        title: 'Product Strategy Meeting Notes',
+        score: 0.95,
+        source: 'meetings',
+        snippet: `Discussion about ${request.query} and strategic initiatives for Q4...`
+      },
+      {
+        id: 'kb-2', 
+        title: 'Email Thread: Project Updates',
+        score: 0.87,
+        source: 'emails',
+        snippet: `Latest updates regarding ${request.query} implementation timeline...`
+      },
+      {
+        id: 'kb-3',
+        title: 'Technical Documentation',
+        score: 0.82,
+        source: 'files',
+        snippet: `Comprehensive guide covering ${request.query} best practices and requirements...`
+      }
+    ];
+
+    return { results: mockResults };
+  }
+
+  async kbGraph(): Promise<KBGraphResponse> {
+    await this.delay(300);
+    return {
+      nodes: [
+        { id: 'project-alpha', label: 'Project Alpha', type: 'project' },
+        { id: 'team-eng', label: 'Engineering Team', type: 'team' },
+        { id: 'doc-api', label: 'API Documentation', type: 'document' },
+        { id: 'meeting-kickoff', label: 'Kickoff Meeting', type: 'meeting' }
+      ],
+      edges: [
+        { from: 'project-alpha', to: 'team-eng', weight: 0.8, label: 'assigned' },
+        { from: 'project-alpha', to: 'doc-api', weight: 0.9, label: 'references' },
+        { from: 'team-eng', to: 'meeting-kickoff', weight: 0.7, label: 'attended' }
+      ]
+    };
+  }
+
+  async getChatThreads(): Promise<ChatThreadsResponse> {
+    await this.delay(150);
+    return {
+      threads: [
+        { id: 'thread-1', name: 'Project Strategy Discussion', updatedAt: new Date().toISOString() },
+        { id: 'thread-2', name: 'Technical Requirements Review', updatedAt: new Date(Date.now() - 86400000).toISOString() },
+        { id: 'thread-3', name: 'Team Coordination', updatedAt: new Date(Date.now() - 172800000).toISOString() }
+      ]
+    };
+  }
+
+  async getChatHistory(threadId: string): Promise<ChatHistoryResponse> {
+    await this.delay(120);
+    return {
+      messages: [
+        {
+          role: 'user',
+          text: 'Can you help me understand the project timeline?',
+          ts: new Date(Date.now() - 3600000).toISOString()
+        },
+        {
+          role: 'assistant', 
+          text: 'Based on the project documentation, here are the key milestones and timeline details...',
+          ts: new Date(Date.now() - 3500000).toISOString()
+        }
+      ]
+    };
+  }
+
+  async sendChat(request: ChatSendRequest): Promise<ChatSendResponse> {
+    await this.delay(800 + Math.random() * 1200);
+    return {
+      reply: `I understand your question about "${request.message}". Based on the available context, here's a comprehensive response with relevant insights and recommendations.`,
+      citations: [
+        { id: 'cite-1', type: 'meeting', source: 'Strategy Review', snippet: 'Relevant discussion points...' }
+      ],
+      steps: [
+        { type: 'search', description: 'Searched knowledge base for relevant information' },
+        { type: 'analysis', description: 'Analyzed context and generated response' }
+      ]
+    };
+  }
+
+  async getProjects(): Promise<ProjectsResponse> {
+    await this.delay(200);
+    return {
+      items: [
+        { id: 'proj-1', name: 'Product Launch Initiative', owner: 'Sarah Chen', status: 'active', updatedAt: new Date().toISOString() },
+        { id: 'proj-2', name: 'Infrastructure Upgrade', owner: 'Mike Rodriguez', status: 'planning', updatedAt: new Date(Date.now() - 86400000).toISOString() },
+        { id: 'proj-3', name: 'Customer Feedback Analysis', owner: 'Emily Park', status: 'completed', updatedAt: new Date(Date.now() - 172800000).toISOString() }
+      ]
+    };
+  }
+
+  async getProject(id: string): Promise<APIProjectDetail> {
+    await this.delay(150);
+    return {
+      id,
+      name: 'Product Launch Initiative',
+      description: 'Comprehensive project to launch our new product line with coordinated marketing and engineering efforts.',
+      owner: 'Sarah Chen',
+      links: [
+        { type: 'document', title: 'Project Charter', url: '/docs/charter' },
+        { type: 'repository', title: 'Source Code', url: '/repos/product-launch' }
+      ],
+      artifacts: [
+        { type: 'meeting', title: 'Kickoff Meeting', date: '2024-01-15' },
+        { type: 'document', title: 'Requirements Spec', date: '2024-01-20' }
+      ]
+    };
+  }
+
+  async getProjectKanban(id: string): Promise<KanbanResponse> {
+    await this.delay(180);
+    return {
+      columns: [
+        {
+          id: 'todo',
+          title: 'To Do',
+          cards: [
+            { id: 'task-1', title: 'Define user personas', assignee: 'Alex Thompson', due: '2024-02-01' },
+            { id: 'task-2', title: 'Setup CI/CD pipeline', assignee: 'Jordan Liu' }
+          ]
+        },
+        {
+          id: 'progress',
+          title: 'In Progress', 
+          cards: [
+            { id: 'task-3', title: 'Implement authentication', assignee: 'Sam Wilson', due: '2024-01-28' }
+          ]
+        },
+        {
+          id: 'done',
+          title: 'Done',
+          cards: [
+            { id: 'task-4', title: 'Project kickoff meeting', assignee: 'Sarah Chen' }
+          ]
+        }
+      ]
+    };
+  }
+
+  async getProjectTimeline(id: string): Promise<TimelineResponse> {
+    await this.delay(160);
+    return {
+      items: [
+        {
+          id: 'milestone-1',
+          type: 'milestone',
+          title: 'Project Kickoff',
+          start: '2024-01-15',
+          owner: 'Sarah Chen',
+          status: 'completed'
+        },
+        {
+          id: 'task-dev-1',
+          type: 'task', 
+          title: 'Core Development Sprint',
+          start: '2024-01-20',
+          end: '2024-02-15',
+          owner: 'Engineering Team',
+          status: 'active',
+          dependencies: ['milestone-1']
+        },
+        {
+          id: 'milestone-2',
+          type: 'milestone',
+          title: 'Beta Release',
+          start: '2024-02-20',
+          owner: 'Product Team',
+          status: 'planned',
+          dependencies: ['task-dev-1']
+        }
+      ]
+    };
+  }
+
+  async getTopics(): Promise<ProjectsResponse> {
+    await this.delay(180);
+    return {
+      items: [
+        { id: 'topic-1', name: 'Product Strategy', owner: 'Strategy Team', status: 'active', updatedAt: new Date().toISOString() },
+        { id: 'topic-2', name: 'Technical Architecture', owner: 'Engineering', status: 'active', updatedAt: new Date(Date.now() - 43200000).toISOString() },
+        { id: 'topic-3', name: 'Market Research', owner: 'Marketing', status: 'completed', updatedAt: new Date(Date.now() - 259200000).toISOString() }
+      ]
+    };
+  }
+
+  async getTopic(id: string): Promise<APIProjectDetail> {
+    await this.delay(140);
+    return {
+      id,
+      name: 'Product Strategy',
+      description: 'Strategic planning and decision-making for product direction and market positioning.',
+      owner: 'Strategy Team',
+      links: [
+        { type: 'document', title: 'Strategy Framework', url: '/docs/strategy' },
+        { type: 'analysis', title: 'Market Analysis', url: '/reports/market' }
+      ],
+      artifacts: [
+        { type: 'meeting', title: 'Strategy Review', date: '2024-01-10' },
+        { type: 'document', title: 'Positioning Statement', date: '2024-01-12' }
+      ]
+    };
+  }
+
+  async generateDigest(request: DigestRequest): Promise<DigestResponse> {
+    await this.delay(1500 + Math.random() * 2000);
+    
+    const scopeTitle = request.scope === 'project' ? 'Project' : 
+                     request.scope === 'topic' ? 'Topic' : 'Global';
+                     
+    return {
+      sections: [
+        {
+          title: `${scopeTitle} Overview`,
+          content: `This digest provides a comprehensive summary of recent activities, key decisions, and important updates within the ${request.scope} scope.`,
+          links: [
+            { type: 'meeting', title: 'Recent Strategy Session', url: '/meetings/recent' }
+          ]
+        },
+        {
+          title: 'Key Insights',
+          content: 'Analysis of recent data shows significant progress in core objectives with several actionable recommendations for continued success.',
+          links: [
+            { type: 'document', title: 'Analysis Report', url: '/reports/insights' }
+          ]
+        },
+        {
+          title: 'Action Items',
+          content: 'Priority actions identified for the next phase include stakeholder alignment, resource allocation review, and timeline optimization.'
+        }
+      ]
+    };
+  }
+
+  async listWatchers(): Promise<WatchListResponse> {
+    await this.delay(120);
+    return {
+      paths: [
+        { id: 'watch-1', path: '/home/user/documents', type: 'files' },
+        { id: 'watch-2', path: '/home/user/meetings', type: 'meetings' },
+        { id: 'watch-3', path: '/shared/projects', type: 'files' }
+      ]
+    };
+  }
+
+  async addWatcher(request: WatchAddRequest): Promise<WatchAddResponse> {
+    await this.delay(100);
+    return {
+      id: `watch-${Date.now()}`
+    };
+  }
+
+  async removeWatcher(request: WatchRemoveRequest): Promise<{ ok: true }> {
+    await this.delay(80);
+    return { ok: true };
+  }
+
+  async updateSchedule(request: ScheduleUpdateRequest): Promise<{ ok: true }> {
+    await this.delay(100);
+    console.log('Mock: Updated schedule for', request.target, 'to', request.intervalMinutes, 'minutes');
+    return { ok: true };
+  }
+
   async getHealth(): Promise<HealthStatus> {
     await this.delay(100);
     return mockHealth;
@@ -225,7 +672,7 @@ class MockProvider {
     return detail;
   }
 
-  async kbSearch(params: SearchParams): Promise<SearchResult> {
+  async kbSearchLegacy(params: SearchParams): Promise<SearchResult> {
     await this.delay(220);
     let items = [...mockKBItems];
     
@@ -273,7 +720,6 @@ class MockProvider {
   }
 
   async* sendChatMessage(threadId: string, message: string, attachments?: string[]): AsyncGenerator<ChatDelta> {
-    // Simulate streaming response
     const response = "I understand you're asking about the topics we discussed. Based on the context from your attached files, here are the key points:\n\n1. **Strategic Planning**: We covered market expansion opportunities\n2. **Resource Allocation**: Budget considerations for Q4 initiatives\n3. **Timeline Management**: Project milestones and delivery dates\n\nWould you like me to elaborate on any of these areas?";
     
     const chunks = response.split(' ');
@@ -286,7 +732,6 @@ class MockProvider {
       } as ChatDelta;
     }
 
-    // Add a citation if there are attachments
     if (attachments && attachments.length > 0) {
       await this.delay(200);
       yield {
@@ -311,20 +756,13 @@ class MockProvider {
 
   async updateSystemConfig(config: SystemConfig): Promise<void> {
     await this.delay(200);
-    // In a real implementation, this would save the config
     console.log('Saving system config:', config);
-  }
-
-  private delay(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
 
-// API Adapter that switches between Live and Mock providers
 class APIAdapter {
   private liveProvider = new LiveProvider();
   private mockProvider = new MockProvider();
-  private liveAPIProvider = new LiveAPIProvider();
 
   private async tryLiveOrFallback<T>(
     liveCall: () => Promise<T>,
@@ -340,7 +778,6 @@ class APIAdapter {
       return await liveCall();
     } catch (error) {
       console.warn('Live API failed, falling back to mock:', error);
-      // Show toast notification about fallback
       if (typeof window !== 'undefined') {
         const event = new CustomEvent('marvin:api-fallback', {
           detail: { error: error instanceof Error ? error.message : 'Unknown error' }
@@ -349,6 +786,132 @@ class APIAdapter {
       }
       return mockCall();
     }
+  }
+
+  async uploadFiles(files: File[], type: 'email' | 'calendar' | 'files'): Promise<UploadResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.uploadFiles(files, type),
+      () => this.mockProvider.uploadFiles(files, type)
+    );
+  }
+
+  async ingestCommit(request: IngestRequest): Promise<IngestResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.ingestCommit(request),
+      () => this.mockProvider.ingestCommit(request)
+    );
+  }
+
+  async kbSearch(request: KBSearchRequest): Promise<KBSearchResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.kbSearch(request),
+      () => this.mockProvider.kbSearch(request)
+    );
+  }
+
+  async kbGraph(): Promise<KBGraphResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.kbGraph(),
+      () => this.mockProvider.kbGraph()
+    );
+  }
+
+  async getChatThreads(): Promise<ChatThreadsResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.getChatThreads(),
+      () => this.mockProvider.getChatThreads()
+    );
+  }
+
+  async getChatHistory(threadId: string): Promise<ChatHistoryResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.getChatHistory(threadId),
+      () => this.mockProvider.getChatHistory(threadId)
+    );
+  }
+
+  async sendChat(request: ChatSendRequest): Promise<ChatSendResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.sendChat(request),
+      () => this.mockProvider.sendChat(request)
+    );
+  }
+
+  async getProjects(): Promise<ProjectsResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.getProjects(),
+      () => this.mockProvider.getProjects()
+    );
+  }
+
+  async getProject(id: string): Promise<APIProjectDetail> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.getProject(id),
+      () => this.mockProvider.getProject(id)
+    );
+  }
+
+  async getProjectKanban(id: string): Promise<KanbanResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.getProjectKanban(id),
+      () => this.mockProvider.getProjectKanban(id)
+    );
+  }
+
+  async getProjectTimeline(id: string): Promise<TimelineResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.getProjectTimeline(id),
+      () => this.mockProvider.getProjectTimeline(id)
+    );
+  }
+
+  async getTopics(): Promise<ProjectsResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.getTopics(),
+      () => this.mockProvider.getTopics()
+    );
+  }
+
+  async getTopic(id: string): Promise<APIProjectDetail> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.getTopic(id),
+      () => this.mockProvider.getTopic(id)
+    );
+  }
+
+  async generateDigest(request: DigestRequest): Promise<DigestResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.generateDigest(request),
+      () => this.mockProvider.generateDigest(request)
+    );
+  }
+
+  async listWatchers(): Promise<WatchListResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.listWatchers(),
+      () => this.mockProvider.listWatchers()
+    );
+  }
+
+  async addWatcher(request: WatchAddRequest): Promise<WatchAddResponse> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.addWatcher(request),
+      () => this.mockProvider.addWatcher(request)
+    );
+  }
+
+  async removeWatcher(request: WatchRemoveRequest): Promise<{ ok: true }> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.removeWatcher(request),
+      () => this.mockProvider.removeWatcher(request)
+    );
+  }
+
+  async updateSchedule(request: ScheduleUpdateRequest): Promise<{ ok: true }> {
+    return this.tryLiveOrFallback(
+      () => this.liveProvider.updateSchedule(request),
+      () => this.mockProvider.updateSchedule(request)
+    );
   }
 
   async getHealth(): Promise<HealthStatus> {
@@ -400,10 +963,10 @@ class APIAdapter {
     );
   }
 
-  async kbSearch(params: SearchParams): Promise<SearchResult> {
+  async kbSearchLegacy(params: SearchParams): Promise<SearchResult> {
     return this.tryLiveOrFallback(
-      () => this.liveProvider.kbSearch(params),
-      () => this.mockProvider.kbSearch(params)
+      () => this.liveProvider.kbSearchLegacy(params),
+      () => this.mockProvider.kbSearchLegacy(params)
     );
   }
 
@@ -465,14 +1028,12 @@ class APIAdapter {
     );
   }
 
-  // New v0.6 methods for enhanced features
-  
   async listProjects(): Promise<Project[]> {
     const stored = localStorage.getItem('marvin-projects');
     return stored ? JSON.parse(stored) : [];
   }
 
-  async getProject(id: string): Promise<Project | null> {
+  async getProjectLocal(id: string): Promise<Project | null> {
     const projects = await this.listProjects();
     return projects.find(p => p.id === id) || null;
   }
@@ -498,13 +1059,13 @@ class APIAdapter {
     return true;
   }
 
-  async getMindmapData(): Promise<{ nodes: MindmapNode[]; edges: MindmapEdge[] }> {
-    const stored = localStorage.getItem('marvin-mindmap');
+  async getMindmapData(type: 'project' | 'topic', id?: string): Promise<{ nodes: MindmapNode[], edges: MindmapEdge[] }> {
+    const stored = localStorage.getItem(`marvin-mindmap-${type}-${id || 'default'}`);
     return stored ? JSON.parse(stored) : { nodes: [], edges: [] };
   }
 
-  async saveMindmapData(data: { nodes: MindmapNode[]; edges: MindmapEdge[] }): Promise<void> {
-    localStorage.setItem('marvin-mindmap', JSON.stringify(data));
+  async saveMindmapData(type: 'project' | 'topic', data: { nodes: MindmapNode[], edges: MindmapEdge[] }, id?: string): Promise<void> {
+    localStorage.setItem(`marvin-mindmap-${type}-${id || 'default'}`, JSON.stringify(data));
   }
 
   async getToolPermissions(): Promise<ToolPermission[]> {
@@ -512,7 +1073,7 @@ class APIAdapter {
     return stored ? JSON.parse(stored) : [];
   }
 
-  async saveToolPermission(permission: ToolPermission): Promise<ToolPermission> {
+  async saveToolPermission(permission: ToolPermission): Promise<void> {
     const permissions = await this.getToolPermissions();
     const index = permissions.findIndex(p => p.toolId === permission.toolId);
     
@@ -523,46 +1084,23 @@ class APIAdapter {
     }
     
     localStorage.setItem('marvin-tool-permissions', JSON.stringify(permissions));
-    return permission;
   }
 
-  async requestToolUsage(request: ToolUsageRequest): Promise<{ approved: boolean; message?: string }> {
-    const stored = localStorage.getItem('marvin-tool-requests');
-    const requests = stored ? JSON.parse(stored) : [];
-    requests.push(request);
-    localStorage.setItem('marvin-tool-requests', JSON.stringify(requests));
-    
-    return { approved: false, message: 'Awaiting user approval' };
+  async requestToolUsage(request: ToolUsageRequest): Promise<string> {
+    const taskId = `task-${Date.now()}`;
+    console.log('Tool usage requested:', { taskId, ...request });
+    return taskId;
   }
 
-  async runIngestionNow(): Promise<{ success: boolean; message: string }> {
-    if (this.liveAPIProvider.available) {
-      try {
-        const result = await this.liveAPIProvider.ingestCommit({});
-        return { success: result.success, message: 'Live ingestion completed' };
-      } catch (error) {
-        console.warn('Live ingestion failed:', error);
-      }
-    }
-    
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    return { success: true, message: 'Mock ingestion completed successfully' };
+  async runIngestionNow(): Promise<{ status: string }> {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    return { status: 'Ingestion started' };
   }
 
-  async reindexSelection(items: string[]): Promise<{ success: boolean; message: string }> {
-    if (this.liveAPIProvider.available) {
-      try {
-        const result = await this.liveAPIProvider.ingestCommit({ items });
-        return { success: result.success, message: 'Live reindexing completed' };
-      } catch (error) {
-        console.warn('Live reindexing failed:', error);
-      }
-    }
-    
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    return { success: true, message: `Mock reindexing of ${items.length} items completed` };
+  async reindexSelection(paths: string[]): Promise<{ status: string, pathsProcessed: number }> {
+    await new Promise(resolve => setTimeout(resolve, 800));
+    return { status: 'Reindexing complete', pathsProcessed: paths.length };
   }
 }
 
-// Export singleton instance
 export const apiAdapter = new APIAdapter();
