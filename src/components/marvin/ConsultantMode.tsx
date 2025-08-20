@@ -145,6 +145,7 @@ export function ConsultantMode() {
   const handleFrameworkSelect = (frameworkId: string) => {
     setSelectedFramework(frameworkId);
     const framework = frameworks.find(f => f.id === frameworkId);
+    setActiveTab('configure'); // Automatically switch to configure tab
     toast.success(`Selected ${framework?.name} framework`);
   };
 
